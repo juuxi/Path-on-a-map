@@ -7,6 +7,7 @@
 struct Obstacle {
     QVector<QPoint> points;
     int resistance;
+    Obstacle(QVector<QPoint> _points, int _resistance) : points(_points), resistance(_resistance) {};
 };
 
 class Map
