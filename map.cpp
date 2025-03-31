@@ -14,6 +14,14 @@ void Map::RemoveObstacle(Obstacle* _obstacle) {
     }
 }
 
+void Map::SetStart(QPoint _start) {
+    start = _start;
+}
+
+void Map::SetFinish(QPoint _finish) {
+    finish = _finish;
+}
+
 Map::~Map() {
     while (!obstacles.empty()) {
         delete obstacles.front();
