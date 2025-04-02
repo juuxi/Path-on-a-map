@@ -3,6 +3,11 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QLabel>
+#include <QPixmap>
+#include <QApplication>
+#include <QEventLoop>
+#include <QBitmap>
 #include <map.h>
 
 class Widget : public QWidget
@@ -13,6 +18,8 @@ class Widget : public QWidget
     QPushButton* remove; //кнопка "удалить препятствие"
     QPushButton* start; //кнопка "установить точку старта"
     QPushButton* finish; //кнопка "установить точку финиша"
+    QLabel* start_point; //метка "старт"
+    QLabel* finish_point; //метка "старт"
     Map map;
 
 public:
