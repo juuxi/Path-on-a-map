@@ -22,6 +22,14 @@ void Map::SetFinish(QPoint _finish) {
     finish = _finish;
 }
 
+void Map::FindPath() {
+    QMap<int, QPoint> priority_queue; //map sorts by first argument,
+    priority_queue.insert(0, start); //makes function first() very helpful
+    QVector<QVector<int>> came_from(500, QVector<int>(500));
+    QVector<QVector<int>> cost(500, QVector<int>(500));
+    //500 must be replaces by sizes of the window
+}
+
 Map::~Map() {
     while (!obstacles.empty()) {
         delete obstacles.front();
