@@ -11,6 +11,14 @@ Widget::Widget(QWidget *parent)
     start_point->setPixmap(start_pic);
     start_point->setMask(start_pic.mask());
     start_point->show();
+
+    debug = new QLabel("aaa", this);
+    debug->setGeometry(100, 100, 360, 360);
+    map.SetFinish(QPoint(100,100));
+    map.SetStart(QPoint(50,50));
+    QString s;
+    s += QString().number(map.FindPath());
+    debug->setText(s);
 }
 
 Widget::~Widget()

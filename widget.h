@@ -20,6 +20,7 @@ class Widget : public QWidget
     QPushButton* finish; //кнопка "установить точку финиша"
     QLabel* start_point; //метка "старт"
     QLabel* finish_point; //метка "старт"
+    QLabel* debug;
     Map map;
 
 public:

@@ -18,9 +18,10 @@ class Map
     int width;
     int height;
     QVector<Obstacle*> obstacles;
+    int Heuristic(QPoint, QPoint);
 public:
     Map();
-    void FindPath();
+    int FindPath();
     void AddObstacle(Obstacle*);
     void RemoveObstacle(Obstacle*);
     void SetStart(QPoint);
