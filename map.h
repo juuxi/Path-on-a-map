@@ -19,6 +19,7 @@ class Map
     int height;
     QVector<Obstacle*> obstacles;
     int Heuristic(QPoint, QPoint);
+    QVector<QPoint> FindNeighbors(QPoint);
 public:
     Map();
     int FindPath();
