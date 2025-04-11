@@ -82,6 +82,10 @@ int Map::FindPath() {
             }
         }
     }
+    QList<QPoint> test;
+    test.push_back(QPoint(1,0));
+    xml_processor.WriteFile("/home/juuxi/Desktop/prog/ETU/2nd_course/Path-on-a-map/output.xml",
+                            mpdt, test, 1, 1);
     return cost[finish.x()][finish.y()];
 }
 

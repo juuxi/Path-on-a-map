@@ -52,3 +52,79 @@ MapData Xml::ReadFile(const QString& filePath) {
     file.close();
     return mapData;
 }
+
+void Xml::WriteFile(const QString& filePath, const MapData& inputData, const QList<QPoint>& path, double distance, double time) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open file for writing:" << filePath;
+        return;
+    }
+
+    QXmlStreamWriter xml(&file);
+    xml.setAutoFormatting(true);
+
+    xml.writeStartDocument();
+    xml.writeStartElement("Route");
+
+    // Input section
+    xml.writeStartElement("Input");
+    xml.writeStartElement("Size");
+    xml.writeAttribute("width", QString::number(inputData.width));
+    xml.writeAttribute("height", QString::number(inputData.height));
+    xml.writeEndElement(); // Size
+
+    xml.writeStartElement("Obstacles");
+    for (const auto& obstacle : inputData.obstacles) {
+        xml.writeStartElement("Obstacle");
+        xml.writeAttribute("impassability", QString::number(obstacle.impassability));
+
+        xml.writeStartElement("Points");
+        xml.writeAttribute("count", QString::number(obstacle.points.size()));
+        for (const auto& point : obstacle.points) {
+            xml.writeStartElement("Point");
+            xml.writeAttribute("x", QString::number(point.x()));
+            xml.writeAttribute("y", QString::number(point.y()));
+            xml.writeEndElement(); // Point
+        }
+        xml.writeEndElement(); // Points
+
+        xml.writeEndElement(); // Obstacle
+    }
+    xml.writeEndElement(); // Obstacles
+
+    xml.writeStartElement("Start");
+    xml.writeAttribute("x", QString::number(inputData.start.x()));
+    xml.writeAttribute("y", QString::number(inputData.start.y()));
+    xml.writeEndElement(); // Start
+
+    xml.writeStartElement("Finish");
+    xml.writeAttribute("x", QString::number(inputData.finish.x()));
+    xml.writeAttribute("y", QString::number(inputData.finish.y()));
+    xml.writeEndElement(); // Finish
+
+    xml.writeEndElement(); // Input
+
+    // Path section
+    xml.writeStartElement("Path");
+    xml.writeStartElement("Points");
+    xml.writeAttribute("count", QString::number(path.size()));
+    for (const auto& point : path) {
+        xml.writeStartElement("Point");
+        xml.writeAttribute("x", QString::number(point.x()));
+        xml.writeAttribute("y", QString::number(point.y()));
+        xml.writeEndElement(); // Point
+    }
+    xml.writeEndElement(); // Points
+    xml.writeEndElement(); // Path
+
+    // Statistics section
+    xml.writeStartElement("Statistics");
+    xml.writeTextElement("Distance", QString::number(distance));
+    xml.writeTextElement("Time", QString::number(time));
+    xml.writeEndElement(); // Statistics
+
+    xml.writeEndElement(); // Route
+    xml.writeEndDocument();
+
+    file.close();
+}

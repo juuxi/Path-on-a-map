@@ -26,7 +26,7 @@ class Xml
 public:
     Xml();
     MapData ReadFile(const QString&);
-    void WriteFile();
+    void WriteFile(const QString&, const MapData&, const QList<QPoint>&, double, double);
 };
 
 #endif // XML_H
