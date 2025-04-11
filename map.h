@@ -4,15 +4,11 @@
 #include <QPoint>
 #include <QVector>
 #include <QMap>
-
-struct Obstacle {
-    QVector<QPoint> points;
-    int resistance;
-    Obstacle(QVector<QPoint> _points, int _resistance) : points(_points), resistance(_resistance) {}
-};
+#include "xml.h"
 
 class Map
 {
+    Xml xml_processor;
     QPoint start;
     QPoint finish;
     int width;

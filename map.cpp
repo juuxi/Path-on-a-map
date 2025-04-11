@@ -50,6 +50,7 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
 }
 
 int Map::FindPath() {
+    MapData mpdt = xml_processor.ReadFile("/home/juuxi/Desktop/prog/ETU/2nd_course/Path-on-a-map/input.xml");
     QMap<int, QPoint> priority_queue; //map sorts by first argument,
     priority_queue.insert(0, start); //makes function first() very helpful
     QVector<QVector<QPoint>> came_from(500, QVector<QPoint>(500));//[x,y]
