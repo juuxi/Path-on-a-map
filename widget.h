@@ -9,6 +9,7 @@
 #include <QEventLoop>
 #include <QBitmap>
 #include <map.h>
+#include <QDir>
 
 class Widget : public QWidget
 {
