@@ -24,6 +24,7 @@ class Widget : public QWidget
     QLabel* debug;
     Map map;
     QList<QPoint> new_poly_points;
+    bool is_adding_obstacle;
 
 public:
     Widget(QWidget *parent = nullptr);

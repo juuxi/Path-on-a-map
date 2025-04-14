@@ -19,6 +19,8 @@ Widget::Widget(QWidget *parent)
     QString s;
     s += QString().number(map.FindPath());
     debug->setText(s);
+
+    is_adding_obstacle = false;
 }
 
 void Widget::paintEvent(QPaintEvent*) {
@@ -41,16 +43,20 @@ void Widget::paintEvent(QPaintEvent*) {
 }
 
 void Widget::mousePressEvent(QMouseEvent*) {
-    new_poly_points.append(QCursor::pos());
+    if (is_adding_obstacle) {
+        new_poly_points.append(QCursor::pos());
+    }
 }
 
 void Widget::mouseDoubleClickEvent(QMouseEvent*) {
-    Obstacle* to_add = new Obstacle;
-    to_add->points = new_poly_points;
-    new_poly_points.clear();
-    to_add->impassability = 50;
-    map.AddObstacle(to_add);
-    update();
+    if (is_adding_obstacle) {
+        Obstacle* to_add = new Obstacle;
+        to_add->points = new_poly_points;
+        new_poly_points.clear();
+        to_add->impassability = 50;
+        map.AddObstacle(to_add);
+        update();
+    }
 }
 
 Widget::~Widget()
