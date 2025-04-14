@@ -1,0 +1,22 @@
+<Map>
+    <Size width="500" height="500"/>
+    <Obstacles>
+        <Obstacle impassability="50">
+            <Points count="3">
+                <Point x="10" y="20"/>
+                <Point x="30" y="40"/>
+                <Point x="50" y="60"/>
+            </Points>
+        </Obstacle>
+        <Obstacle impassability="80">
+            <Points count="4">
+                <Point x="70" y="80"/>
+                <Point x="90" y="100"/>
+                <Point x="110" y="120"/>
+                <Point x="130" y="140"/>
+            </Points>
+        </Obstacle>
+    </Obstacles>
+    <Start x="10" y="20"/>
+    <Finish x="100" y="200"/>
+</Map>
