@@ -28,8 +28,29 @@ void Widget::paintEvent(QPaintEvent*) {
     QVector<QPoint> points = {QPoint(50, 100), QPoint(100, 50),
                               QPoint(150, 100), QPoint(100, 150)};
     QPolygon poly(points);
+    for (int i = 0; i < map.obstacles.size(); i++) {
+        points.clear();
+        for (int j = 0; j < map.obstacles[i]->points.size(); j++) {
+            points.push_back(map.obstacles[i]->points[j]);
+        }
+        QPolygon poly_2(points);
+        p.drawPolygon(poly_2);
+    }
     p.drawPolygon(poly);
     p.end();
+}
+
+void Widget::mousePressEvent(QMouseEvent*) {
+    new_poly_points.append(QCursor::pos());
+}
+
+void Widget::mouseDoubleClickEvent(QMouseEvent*) {
+    Obstacle* to_add = new Obstacle;
+    to_add->points = new_poly_points;
+    new_poly_points.clear();
+    to_add->impassability = 50;
+    map.AddObstacle(to_add);
+    update();
 }
 
 Widget::~Widget()

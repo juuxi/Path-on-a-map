@@ -23,12 +23,15 @@ class Widget : public QWidget
     QLabel* finish_point; //метка "старт"
     QLabel* debug;
     Map map;
+    QList<QPoint> new_poly_points;
 
 public:
     Widget(QWidget *parent = nullptr);
     void Process();
     void paintEvent(QPaintEvent*);
     ~Widget();
-
+private:
+    void mousePressEvent(QMouseEvent*);
+    void mouseDoubleClickEvent(QMouseEvent*);
 };
 #endif // WIDGET_H
