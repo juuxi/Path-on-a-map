@@ -7,10 +7,11 @@
 #include <QDebug>
 #include <QXmlStreamWriter>
 #include <QPoint>
+#include <QVector>
 
 struct Obstacle {
     int impassability;
-    QList<QPoint> points;
+    QVector<QPoint> points;
 };
 
 struct MapData {

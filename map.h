@@ -2,7 +2,6 @@
 #define MAP_H
 
 #include <QPoint>
-#include <QVector>
 #include <QMap>
 #include "xml.h"
 

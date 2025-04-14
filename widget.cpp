@@ -31,11 +31,7 @@ void Widget::paintEvent(QPaintEvent*) {
                               QPoint(150, 100), QPoint(100, 150)};
     QPolygon poly(points);
     for (int i = 0; i < map.obstacles.size(); i++) {
-        points.clear();
-        for (int j = 0; j < map.obstacles[i]->points.size(); j++) {
-            points.push_back(map.obstacles[i]->points[j]);
-        }
-        QPolygon poly_2(points);
+        QPolygon poly_2(map.obstacles[i]->points);
         p.drawPolygon(poly_2);
     }
     p.drawPolygon(poly);

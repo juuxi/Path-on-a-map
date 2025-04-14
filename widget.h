@@ -23,7 +23,7 @@ class Widget : public QWidget
     QLabel* finish_point; //метка "старт"
     QLabel* debug;
     Map map;
-    QList<QPoint> new_poly_points;
+    QVector<QPoint> new_poly_points;
     bool is_adding_obstacle;
 
 public:
