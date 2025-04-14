@@ -18,7 +18,18 @@ Widget::Widget(QWidget *parent)
     map.SetStart(QPoint(50,50));
     QString s;
     s += QString().number(map.FindPath());
-    debug->setText(QDir::currentPath());
+    debug->setText(s);
+}
+
+void Widget::paintEvent(QPaintEvent*) {
+    QPainter p;
+    p.begin(this);
+    p.setBrush(QBrush(QColor(120)));
+    QVector<QPoint> points = {QPoint(50, 100), QPoint(100, 50),
+                              QPoint(150, 100), QPoint(100, 150)};
+    QPolygon poly(points);
+    p.drawPolygon(poly);
+    p.end();
 }
 
 Widget::~Widget()

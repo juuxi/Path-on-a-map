@@ -9,7 +9,7 @@
 #include <QEventLoop>
 #include <QBitmap>
 #include <map.h>
-#include <QDir>
+#include <QPainter>
 
 class Widget : public QWidget
 {
@@ -27,6 +27,8 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     void Process();
+    void paintEvent(QPaintEvent*);
     ~Widget();
+
 };
 #endif // WIDGET_H
