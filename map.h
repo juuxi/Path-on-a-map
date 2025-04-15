@@ -16,12 +16,8 @@ class Map
     QVector<QPoint> FindNeighbors(QPoint);
 public:
     Map();
-    QVector<Obstacle*> obstacles;
+    QList<Obstacle> obstacles;
     int FindPath();
-    void AddObstacle(Obstacle*);
-    void RemoveObstacle(Obstacle*);
-    void SetStart(QPoint);
-    void SetFinish(QPoint);
     ~Map();
 };
 

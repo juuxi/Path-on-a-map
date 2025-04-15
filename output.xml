@@ -3,7 +3,7 @@
     <Input>
         <Size width="500" height="500"/>
         <Obstacles/>
-        <Start x="0" y="0"/>
+        <Start x="50" y="50"/>
         <Finish x="100" y="100"/>
     </Input>
     <Path>

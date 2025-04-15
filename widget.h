@@ -24,6 +24,7 @@ class Widget : public QWidget
     QLabel* debug;
     Map map;
     Xml xml;
+    MapData mpdt;
     QVector<QPoint> new_poly_points;
     bool is_adding_obstacle;
 

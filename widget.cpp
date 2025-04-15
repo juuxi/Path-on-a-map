@@ -14,28 +14,16 @@ Widget::Widget(QWidget *parent)
 
     debug = new QLabel("aaa", this);
     debug->setGeometry(0, 100, 500, 360);
-    map.SetFinish(QPoint(100,100));
-    map.SetStart(QPoint(50,50));
+    mpdt.start = QPoint(50,50);
+    mpdt.finish = QPoint(100,100);
+    mpdt.height = 500;
+    mpdt.width = 500;
+    xml.WriteInFile("../../input.xml", mpdt);
     QString s;
     s += QString().number(map.FindPath());
     debug->setText(s);
 
     is_adding_obstacle = false;
-
-    MapData mpdt;
-    mpdt.start = QPoint(0,0);
-    mpdt.finish = QPoint(100,100);
-    mpdt.height = 500;
-    mpdt.width = 500;
-    QList<Obstacle> obss;
-    Obstacle obs;
-    obs.impassability = 10;
-    QVector<QPoint> points;
-    points.push_back(QPoint(1,1));
-    obs.points = points;
-    obss.push_back(obs);
-    mpdt.obstacles = obss;
-    xml.WriteInFile("../../input.xml", mpdt);
 }
 
 void Widget::paintEvent(QPaintEvent*) {
@@ -45,8 +33,8 @@ void Widget::paintEvent(QPaintEvent*) {
     QVector<QPoint> points = {QPoint(50, 100), QPoint(100, 50),
                               QPoint(150, 100), QPoint(100, 150)};
     QPolygon poly(points);
-    for (int i = 0; i < map.obstacles.size(); i++) {
-        QPolygon poly_2(map.obstacles[i]->points);
+    for (int i = 0; i < mpdt.obstacles.size(); i++) {
+        QPolygon poly_2(mpdt.obstacles[i].points);
         p.drawPolygon(poly_2);
     }
     p.drawPolygon(poly);
@@ -61,11 +49,12 @@ void Widget::mousePressEvent(QMouseEvent*) {
 
 void Widget::mouseDoubleClickEvent(QMouseEvent*) {
     if (is_adding_obstacle) {
-        Obstacle* to_add = new Obstacle;
-        to_add->points = new_poly_points;
+        Obstacle to_add;
+        to_add.points = new_poly_points;
         new_poly_points.clear();
-        to_add->impassability = 50;
-        map.AddObstacle(to_add);
+        to_add.impassability = 50;
+        mpdt.obstacles.push_back(to_add);
+        xml.WriteInFile("../../input.xml", mpdt);
         update();
     }
 }

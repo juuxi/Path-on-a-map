@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map>
     <Size width="500" height="500"/>
-    <Obstacles>
-        <Obstacle impassability="10">
-            <Points count="1">
-                <Point x="1" y="1"/>
-            </Points>
-        </Obstacle>
-    </Obstacles>
-    <Start x="0" y="0"/>
+    <Obstacles/>
+    <Start x="50" y="50"/>
     <Finish x="100" y="100"/>
 </Map>

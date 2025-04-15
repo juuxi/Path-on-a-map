@@ -6,24 +6,6 @@ Map::Map() {
     height = 500;
 }
 
-void Map::AddObstacle(Obstacle* _obstacle) {
-    obstacles.push_back(_obstacle);
-}
-
-void Map::RemoveObstacle(Obstacle* _obstacle) {
-    if (obstacles.indexOf(_obstacle) != -1) {
-        obstacles.remove(obstacles.indexOf(_obstacle));
-    }
-}
-
-void Map::SetStart(QPoint _start) {
-    start = _start;
-}
-
-void Map::SetFinish(QPoint _finish) {
-    finish = _finish;
-}
-
 int Map::Heuristic(QPoint a, QPoint b) { //distance between two points
     return abs(a.x()-b.x()) + abs(a.y()-b.y());
 }
@@ -51,6 +33,11 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
 
 int Map::FindPath() {
     MapData mpdt = xml_processor.ReadFile("../../input.xml");
+    start = mpdt.start;
+    finish = mpdt.finish;
+    height = mpdt.height;
+    width = mpdt.width;
+    obstacles = mpdt.obstacles;
     QMap<int, QPoint> priority_queue; //map sorts by first argument,
     priority_queue.insert(0, start); //makes function first() very helpful
     QVector<QVector<QPoint>> came_from(500, QVector<QPoint>(500));//[x,y]
