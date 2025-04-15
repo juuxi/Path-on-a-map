@@ -84,7 +84,7 @@ int Map::FindPath() {
     }
     QList<QPoint> test;
     test.push_back(QPoint(1,0));
-    xml_processor.WriteFile("../../output.xml", mpdt, test, 1, 1);
+    xml_processor.WriteOutFile("../../output.xml", mpdt, test, 1, 1);
     return cost[finish.x()][finish.y()];
 }
 

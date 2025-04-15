@@ -21,6 +21,21 @@ Widget::Widget(QWidget *parent)
     debug->setText(s);
 
     is_adding_obstacle = false;
+
+    MapData mpdt;
+    mpdt.start = QPoint(0,0);
+    mpdt.finish = QPoint(100,100);
+    mpdt.height = 500;
+    mpdt.width = 500;
+    QList<Obstacle> obss;
+    Obstacle obs;
+    obs.impassability = 10;
+    QVector<QPoint> points;
+    points.push_back(QPoint(1,1));
+    obs.points = points;
+    obss.push_back(obs);
+    mpdt.obstacles = obss;
+    xml.WriteInFile("../../input.xml", mpdt);
 }
 
 void Widget::paintEvent(QPaintEvent*) {
