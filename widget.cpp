@@ -1,8 +1,7 @@
 #include "widget.h"
 
 Widget::Widget(QWidget *parent)
-    : QWidget(parent)
-{
+    : QWidget(parent) {
     setWindowTitle("Поиск кратчайшего пути на карте");
     setFixedSize(500, 500);
     start_point = new QLabel(this);
@@ -59,7 +58,6 @@ void Widget::mouseDoubleClickEvent(QMouseEvent*) {
     }
 }
 
-Widget::~Widget()
-{
+Widget::~Widget() {
 }
 

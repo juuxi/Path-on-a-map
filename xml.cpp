@@ -1,7 +1,6 @@
 #include "xml.h"
 
-Xml::Xml()
-{
+Xml::Xml() {
 
 }
 
