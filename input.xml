@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map>
     <Size width="500" height="500"/>
-    <Obstacles/>
+    <Obstacles>
+        <Obstacle impassability="50">
+            <Points count="6">
+                <Point x="197" y="339"/>
+                <Point x="215" y="213"/>
+                <Point x="344" y="187"/>
+                <Point x="393" y="344"/>
+                <Point x="268" y="428"/>
+                <Point x="185" y="417"/>
+            </Points>
+        </Obstacle>
+        <Obstacle impassability="50">
+            <Points count="6">
+                <Point x="125" y="174"/>
+                <Point x="173" y="47"/>
+                <Point x="285" y="46"/>
+                <Point x="385" y="94"/>
+                <Point x="293" y="154"/>
+                <Point x="186" y="187"/>
+            </Points>
+        </Obstacle>
+        <Obstacle impassability="50">
+            <Points count="7">
+                <Point x="417" y="277"/>
+                <Point x="430" y="199"/>
+                <Point x="444" y="104"/>
+                <Point x="466" y="188"/>
+                <Point x="468" y="276"/>
+                <Point x="446" y="372"/>
+                <Point x="405" y="354"/>
+            </Points>
+        </Obstacle>
+    </Obstacles>
     <Start x="50" y="50"/>
     <Finish x="100" y="100"/>
 </Map>

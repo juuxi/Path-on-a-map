@@ -22,21 +22,21 @@ Widget::Widget(QWidget *parent)
     s += QString().number(map.FindPath());
     debug->setText(s);
 
-    is_adding_obstacle = false;
+    is_adding_obstacle = true;
 }
 
 void Widget::paintEvent(QPaintEvent*) {
     QPainter p;
     p.begin(this);
     p.setBrush(QBrush(QColor(120)));
-    QVector<QPoint> points = {QPoint(50, 100), QPoint(100, 50),
-                              QPoint(150, 100), QPoint(100, 150)};
-    QPolygon poly(points);
-    for (int i = 0; i < mpdt.obstacles.size(); i++) {
-        QPolygon poly_2(mpdt.obstacles[i].points);
-        p.drawPolygon(poly_2);
+    p.setPen(QPen(QColor(50)));
+    for (int i = 1; i < new_poly_points.size(); i++) {
+        p.drawLine(new_poly_points[i-1], new_poly_points[i]);
     }
-    p.drawPolygon(poly);
+    for (Obstacle obstacle: mpdt.obstacles) {
+        QPolygon poly(obstacle.points);
+        p.drawPolygon(poly);
+    }
     p.end();
 }
 
@@ -44,6 +44,7 @@ void Widget::mousePressEvent(QMouseEvent*) {
     if (is_adding_obstacle) {
         new_poly_points.append(QCursor::pos());
     }
+    update();
 }
 
 void Widget::mouseDoubleClickEvent(QMouseEvent*) {
