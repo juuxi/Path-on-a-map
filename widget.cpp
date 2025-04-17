@@ -17,8 +17,12 @@ Widget::Widget(QWidget *parent)
     mpdt.finish = QPoint(100,100);
     mpdt.height = 500;
     mpdt.width = 500;
-    xml.WriteInFile("../../input.xml", mpdt);
     QString s;
+    Obstacle obs;
+    obs.points = {QPoint(55,55), QPoint(55, 70), QPoint(70, 70), QPoint(70, 55)};
+    obs.impassability = 50;
+    mpdt.obstacles.push_back(obs);
+    xml.WriteInFile("../../input.xml", mpdt);
     s += QString().number(map.FindPath());
     debug->setText(s);
 

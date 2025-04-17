@@ -31,6 +31,16 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
     return neighbors;
 }
 
+int Map::CostMoving(QPoint from, QPoint to) {
+    for (Obstacle obstacle: obstacles) {
+        QPolygon poly(obstacle.points);
+        if(poly.containsPoint(to, Qt::OddEvenFill)) {
+            return obstacle.impassability;
+        }
+    }
+    return 1;
+}
+
 int Map::FindPath() {
     MapData mpdt = xml_processor.ReadFile("../../input.xml");
     start = mpdt.start;
@@ -59,7 +69,7 @@ int Map::FindPath() {
         }
 
         for (QPoint neighbor: neighbors) {
-            int new_cost = cost[curr.x()][curr.y()] + 1; //1 must be replaced with cost
+            int new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor); //1 must be replaced with cost
             //of moving from curr to neighbor
             if (cost[neighbor.x()][neighbor.y()] == 0 || new_cost < cost[neighbor.x()][neighbor.y()]) {
                 int priority = new_cost + Heuristic(finish, neighbor);

@@ -2,7 +2,16 @@
 <Route>
     <Input>
         <Size width="500" height="500"/>
-        <Obstacles/>
+        <Obstacles>
+            <Obstacle impassability="50">
+                <Points count="4">
+                    <Point x="55" y="55"/>
+                    <Point x="55" y="70"/>
+                    <Point x="70" y="70"/>
+                    <Point x="70" y="55"/>
+                </Points>
+            </Obstacle>
+        </Obstacles>
         <Start x="50" y="50"/>
         <Finish x="100" y="100"/>
     </Input>
