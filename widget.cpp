@@ -14,7 +14,7 @@ Widget::Widget(QWidget *parent)
     debug = new QLabel("aaa", this);
     debug->setGeometry(0, 100, 500, 360);
     mpdt.start = QPoint(50,50);
-    mpdt.finish = QPoint(100,100);
+    mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
     QString s;
@@ -41,6 +41,7 @@ void Widget::paintEvent(QPaintEvent*) {
         QPolygon poly(obstacle.points);
         p.drawPolygon(poly);
     }
+    map.PaintPath(&p);
     p.end();
 }
 

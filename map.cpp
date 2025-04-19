@@ -1,7 +1,7 @@
 #include "map.h"
 #include <math.h>
 
-Map::Map() {
+Map::Map() : came_from(500, QVector<QPoint>(500)) {//[x,y]
     width = 500;
     height = 500;
 }
@@ -50,7 +50,6 @@ int Map::FindPath() {
     obstacles = mpdt.obstacles;
     QMap<int, QPoint> priority_queue; //map sorts by first argument,
     priority_queue.insert(0, start); //makes function first() very helpful
-    QVector<QVector<QPoint>> came_from(500, QVector<QPoint>(500));//[x,y]
     QVector<QVector<int>> cost(width, QVector<int>(height));
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
@@ -83,6 +82,16 @@ int Map::FindPath() {
     test.push_back(QPoint(1,0));
     xml_processor.WriteOutFile("../../output.xml", mpdt, test, 1, 1);
     return cost[finish.x()][finish.y()];
+}
+
+void Map::PaintPath(QPainter* p) {
+    QPoint curr = finish;
+    p->setPen(QPen(QColor(255, 0, 0)));
+    while (curr != start) {
+        QPoint from = came_from[curr.x()][curr.y()];
+        p->drawLine(curr.x(), curr.y(), from.x(), from.y());
+        curr = from;
+    }
 }
 
 Map::~Map() {

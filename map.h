@@ -3,7 +3,7 @@
 
 #include <QPoint>
 #include <QMap>
-#include <QPolygon>
+#include <QPainter>
 #include "xml.h"
 
 class Map
@@ -13,6 +13,7 @@ class Map
     QPoint finish;
     int width;
     int height;
+    QVector<QVector<QPoint>> came_from;
     QList<Obstacle> obstacles;
     int Heuristic(QPoint, QPoint);
     QVector<QPoint> FindNeighbors(QPoint);
@@ -20,6 +21,7 @@ class Map
 public:
     Map();
     int FindPath();
+    void PaintPath(QPainter*);
     ~Map();
 };
 
