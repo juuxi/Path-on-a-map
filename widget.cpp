@@ -2,12 +2,13 @@
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent) {
-    setWindowTitle("Поиск кратчайшего пути на карте");
     is_adding_obstacle = false;
+    is_deleting_obstacle = false;
     setupUI();
 }
 
 void Widget::setupUI() {
+    setWindowTitle("Поиск кратчайшего пути на карте");
     setMinimumSize(500, 500);
 
     add_obstacle_btn = new QPushButton("Добавить объект", this);
@@ -83,7 +84,7 @@ void Widget::add_obstacle_clicked() {
 }
 
 void Widget::delete_obstacle_clicked() {
-
+    is_deleting_obstacle = true;
 }
 
 void Widget::change_size_clicked() {
@@ -124,6 +125,14 @@ void Widget::paintEvent(QPaintEvent*) {
 void Widget::mousePressEvent(QMouseEvent*) {
     if (is_adding_obstacle) {
         new_poly_points.append(QCursor::pos());
+    }
+    if (is_deleting_obstacle) {
+        for(const Obstacle& obstacle: mpdt.obstacles) {
+            QPolygon poly(obstacle.points);
+            if(poly.containsPoint(QCursor::pos(), Qt::OddEvenFill)) {
+                mpdt.obstacles.removeAt(mpdt.obstacles.indexOf(obstacle));
+            }
+        }
     }
     update();
 }

@@ -12,6 +12,9 @@
 struct Obstacle {
     int impassability;
     QVector<QPoint> points;
+    bool operator==(const Obstacle& other) const {
+        return points == other.points;
+    }
 };
 
 struct MapData {

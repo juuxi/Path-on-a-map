@@ -33,6 +33,7 @@ class Widget : public QWidget
     MapData mpdt;
     QVector<QPoint> new_poly_points;
     bool is_adding_obstacle;
+    bool is_deleting_obstacle;
 
 public:
     Widget(QWidget *parent = nullptr);
