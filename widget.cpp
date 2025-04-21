@@ -46,6 +46,25 @@ void Widget::setupUI() {
     obs.impassability = 50;
     mpdt.obstacles.push_back(obs);
 
+    start_point = new QLabel(this);
+    start_point->setGeometry(200, 30, 125, 30);
+    QString s;
+    s += "Финиш: ";
+    s += QString::number(mpdt.start.x());
+    s += ",";
+    s += QString::number(mpdt.start.y());
+    start_point->setText(s);
+
+    finish_point = new QLabel(this);
+    finish_point->setGeometry(350, 30, 125, 30);
+    s.clear();
+    s += "Старт: ";
+    s += QString::number(mpdt.finish.x());
+    s += ",";
+    s += QString::number(mpdt.finish.y());
+    finish_point->setText(s);
+
+
     reposition_buttons();
 }
 
