@@ -13,11 +13,29 @@
             </Obstacle>
             <Obstacle impassability="50">
                 <Points count="5">
-                    <Point x="272" y="328"/>
-                    <Point x="342" y="193"/>
-                    <Point x="420" y="207"/>
-                    <Point x="446" y="329"/>
-                    <Point x="314" y="358"/>
+                    <Point x="277" y="267"/>
+                    <Point x="320" y="208"/>
+                    <Point x="434" y="240"/>
+                    <Point x="386" y="310"/>
+                    <Point x="300" y="321"/>
+                </Points>
+            </Obstacle>
+            <Obstacle impassability="50">
+                <Points count="5">
+                    <Point x="288" y="388"/>
+                    <Point x="307" y="350"/>
+                    <Point x="255" y="299"/>
+                    <Point x="248" y="358"/>
+                    <Point x="278" y="400"/>
+                </Points>
+            </Obstacle>
+            <Obstacle impassability="50">
+                <Points count="5">
+                    <Point x="333" y="390"/>
+                    <Point x="339" y="339"/>
+                    <Point x="375" y="344"/>
+                    <Point x="366" y="372"/>
+                    <Point x="346" y="384"/>
                 </Points>
             </Obstacle>
         </Obstacles>

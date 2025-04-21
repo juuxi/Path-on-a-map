@@ -139,6 +139,10 @@ void Widget::paintEvent(QPaintEvent*) {
         QPolygon poly(obstacle.points);
         p.drawPolygon(poly);
     }
+    p.setBrush(QBrush(QColor(255, 0, 0)));
+    p.drawEllipse(mpdt.start, 10, 10);
+    p.setBrush(QBrush(QColor(0, 255, 0)));
+    p.drawEllipse(mpdt.finish, 10, 10);
     map.PaintPath(&p);
     p.end();
 }
