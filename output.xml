@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Route>
     <Input>
-        <Size width="500" height="500"/>
+        <Size width="500" height="500" left_map_margin="190"/>
         <Obstacles>
             <Obstacle impassability="50">
                 <Points count="4">

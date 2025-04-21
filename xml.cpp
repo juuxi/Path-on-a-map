@@ -21,6 +21,7 @@ MapData Xml::ReadFile(const QString& filePath) {
             if (xml.name() == "Size") {
                 mapData.width = xml.attributes().value("width").toInt();
                 mapData.height = xml.attributes().value("height").toInt();
+                mapData.left_map_margin = xml.attributes().value("left_map_margin").toInt();
             } else if (xml.name() == "Obstacle") {
                 Obstacle obstacle;
                 obstacle.impassability = xml.attributes().value("impassability").toInt();
@@ -70,6 +71,7 @@ void Xml::WriteOutFile(const QString& filePath, const MapData& inputData, const 
     xml.writeStartElement("Size");
     xml.writeAttribute("width", QString::number(inputData.width));
     xml.writeAttribute("height", QString::number(inputData.height));
+    xml.writeAttribute("left_map_margin", QString::number(inputData.left_map_margin));
     xml.writeEndElement(); // Size
 
     xml.writeStartElement("Obstacles");
@@ -145,6 +147,7 @@ void Xml::WriteInFile(const QString& filePath, const MapData& inputData){
     xml.writeStartElement("Size");
     xml.writeAttribute("width", QString::number(inputData.width));
     xml.writeAttribute("height", QString::number(inputData.height));
+    xml.writeAttribute("left_map_margin", QString::number(inputData.left_map_margin));
     xml.writeEndElement(); // Size
 
     xml.writeStartElement("Obstacles");

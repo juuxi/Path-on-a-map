@@ -21,6 +21,7 @@ struct MapData {
     int width, height;
     QList<Obstacle> obstacles;
     QPoint start, finish;
+    int left_map_margin;
 };
 
 class Xml

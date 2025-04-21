@@ -45,6 +45,7 @@ void Widget::setupUI() {
     obs.points = {QPoint(55,55), QPoint(55, 70), QPoint(70, 70), QPoint(70, 55)};
     obs.impassability = 50;
     mpdt.obstacles.push_back(obs);
+    mpdt.left_map_margin = 150 + 2 * left_margin;
 
     start_point = new QLabel(this);
     start_point->setGeometry(200, 30, 125, 30);
@@ -123,6 +124,7 @@ void Widget::execute_clicked() {
     xml.WriteInFile("../../input.xml", mpdt);
     s += QString().number(map.FindPath());
     debug->setText(s);
+    update();
 }
 
 void Widget::paintEvent(QPaintEvent*) {
