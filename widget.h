@@ -14,11 +14,17 @@
 class Widget : public QWidget
 {
     Q_OBJECT
-    QPushButton* implement; //кнопка "выполнить" (найти путь и отобрзить его)
-    QPushButton* add; //кнопка "добавить препятствие"
-    QPushButton* remove; //кнопка "удалить препятствие"
-    QPushButton* start; //кнопка "установить точку старта"
-    QPushButton* finish; //кнопка "установить точку финиша"
+    QPushButton *add_obstacle_btn;
+    QPushButton *delete_obstacle_btn;
+    QPushButton *start_btn;
+    QPushButton *change_size_btn;
+    QPushButton *finish_btn; //кнопка "установить точку финиша"
+    QPushButton *execute_btn;
+
+    const int left_margin = 20;
+    const int top_margin = 10;
+    const int bottom_margin = 10;
+
     QLabel* start_point; //метка "старт"
     QLabel* finish_point; //метка "старт"
     QLabel* debug;
@@ -33,8 +39,19 @@ public:
     void Process();
     void paintEvent(QPaintEvent*);
     ~Widget();
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 private:
     void mousePressEvent(QMouseEvent*);
     void mouseDoubleClickEvent(QMouseEvent*);
+    void setupUI();
+    void reposition_buttons();
+private slots:
+    void add_obstacle_clicked();
+    void delete_obstacle_clicked();
+    void start_clicked();
+    void change_size_clicked();
+    void finish_clicked();
+    void execute_clicked();
 };
 #endif // WIDGET_H

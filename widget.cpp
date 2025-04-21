@@ -3,30 +3,106 @@
 Widget::Widget(QWidget *parent)
     : QWidget(parent) {
     setWindowTitle("Поиск кратчайшего пути на карте");
-    setFixedSize(500, 500);
-    start_point = new QLabel(this);
-    //start_point->setGeometry(100, 100, 360, 360);
-    QPixmap start_pic = QPixmap("../../start_point.jpg");
-    start_point->setPixmap(start_pic);
-    start_point->setMask(start_pic.mask());
-    start_point->show();
+    is_adding_obstacle = false;
+    setupUI();
+}
+
+void Widget::setupUI() {
+    setMinimumSize(500, 500);
+
+    add_obstacle_btn = new QPushButton("Добавить объект", this);
+    add_obstacle_btn->setFixedSize(150, 50);
+    connect(add_obstacle_btn, &QPushButton::clicked, this, &Widget::add_obstacle_clicked);
+
+    delete_obstacle_btn = new QPushButton("Удалить объект", this);
+    delete_obstacle_btn->setFixedSize(150, 50);
+    connect(delete_obstacle_btn, &QPushButton::clicked, this, &Widget::delete_obstacle_clicked);
+
+    start_btn = new QPushButton("Старт", this);
+    start_btn->setFixedSize(150, 50);
+    connect(start_btn, &QPushButton::clicked, this, &Widget::start_clicked);
+
+    change_size_btn = new QPushButton("Изменить размер карты", this);
+    change_size_btn->setFixedSize(150, 50);
+    connect(change_size_btn, &QPushButton::clicked, this, &Widget::change_size_clicked);
+
+    finish_btn = new QPushButton("Финиш", this);
+    finish_btn->setFixedSize(150, 50);
+    connect(finish_btn, &QPushButton::clicked, this, &Widget::finish_clicked);
+
+    execute_btn = new QPushButton("Выполнить", this);
+    execute_btn->setFixedSize(150, 50);
+    connect(execute_btn, &QPushButton::clicked, this, &Widget::execute_clicked);
 
     debug = new QLabel("aaa", this);
-    debug->setGeometry(0, 100, 500, 360);
+    debug->setGeometry(300, 100, 100, 30);
     mpdt.start = QPoint(50,50);
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
-    QString s;
     Obstacle obs;
     obs.points = {QPoint(55,55), QPoint(55, 70), QPoint(70, 70), QPoint(70, 55)};
     obs.impassability = 50;
     mpdt.obstacles.push_back(obs);
+
+    reposition_buttons();
+}
+
+void Widget::resizeEvent(QResizeEvent *event) {
+    QWidget::resizeEvent(event);
+    reposition_buttons();
+}
+
+void Widget::reposition_buttons() {
+    int windowHeight = height();
+    int availableHeight = windowHeight - top_margin - bottom_margin;
+    int totalButtonHeight = 6 * 50;
+    int spacing = (availableHeight - totalButtonHeight) / (6 + 1);
+    int topOffset = top_margin + spacing;
+
+    add_obstacle_btn->move(left_margin, topOffset);
+    topOffset += add_obstacle_btn->height() + spacing;
+
+    delete_obstacle_btn->move(left_margin, topOffset);
+    topOffset += delete_obstacle_btn->height() + spacing;
+
+    start_btn->move(left_margin, topOffset);
+    topOffset += start_btn->height() + spacing;
+
+    change_size_btn->move(left_margin, topOffset);
+    topOffset += change_size_btn->height() + spacing;
+
+    finish_btn->move(left_margin, topOffset);
+    topOffset += finish_btn->height() + spacing;
+
+    execute_btn->move(left_margin, topOffset);
+}
+
+void Widget::add_obstacle_clicked() {
+    is_adding_obstacle = true;
+}
+
+void Widget::delete_obstacle_clicked() {
+
+}
+
+void Widget::change_size_clicked() {
+
+}
+
+void Widget::start_clicked() {
+
+}
+
+void Widget::finish_clicked() {
+
+}
+
+void Widget::execute_clicked() {
+    QString s;
     xml.WriteInFile("../../input.xml", mpdt);
     s += QString().number(map.FindPath());
     debug->setText(s);
-
-    is_adding_obstacle = true;
 }
 
 void Widget::paintEvent(QPaintEvent*) {
