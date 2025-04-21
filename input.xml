@@ -10,7 +10,16 @@
                 <Point x="70" y="55"/>
             </Points>
         </Obstacle>
+        <Obstacle impassability="50">
+            <Points count="5">
+                <Point x="272" y="328"/>
+                <Point x="342" y="193"/>
+                <Point x="420" y="207"/>
+                <Point x="446" y="329"/>
+                <Point x="314" y="358"/>
+            </Points>
+        </Obstacle>
     </Obstacles>
-    <Start x="50" y="50"/>
+    <Start x="200" y="150"/>
     <Finish x="400" y="400"/>
 </Map>

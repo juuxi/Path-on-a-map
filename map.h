@@ -13,6 +13,7 @@ class Map
     QPoint finish;
     int width;
     int height;
+    int left_margin;
     QVector<QVector<QPoint>> came_from;
     QList<Obstacle> obstacles;
     int Heuristic(QPoint, QPoint);

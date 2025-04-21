@@ -12,19 +12,19 @@ int Map::Heuristic(QPoint a, QPoint b) { //distance between two points
 
 QVector<QPoint> Map::FindNeighbors(QPoint p) {
     QVector<QPoint> neighbors;
-    if (p.x() != 0)
+    if (p.x() != left_margin)
         neighbors.push_back(QPoint(p.x()-1, p.y()));
     if (p.x() != width)
         neighbors.push_back(QPoint(p.x()+1, p.y()));
-    if (p.y() != 0)
+    if (p.y() != left_margin)
         neighbors.push_back(QPoint(p.x(), p.y()-1));
     if (p.y() != height)
         neighbors.push_back(QPoint(p.x(), p.y()+1));
-    if (p.x() != 0 && p.y() != 0)
+    if (p.x() != left_margin && p.y() != 0)
         neighbors.push_back(QPoint(p.x()-1, p.y()-1));
     if (p.x() != width && p.y() != 0)
         neighbors.push_back(QPoint(p.x()+1, p.y()-1));
-    if (p.x() != 0 && p.y() != height)
+    if (p.x() != left_margin && p.y() != height)
         neighbors.push_back(QPoint(p.x()-1, p.y()+1));
     if (p.x() != width && p.y() != height)
         neighbors.push_back(QPoint(p.x()+1, p.y()+1));
@@ -48,6 +48,7 @@ int Map::FindPath() {
     height = mpdt.height;
     width = mpdt.width;
     obstacles = mpdt.obstacles;
+    left_margin = mpdt.left_map_margin;
     QMap<int, QPoint> priority_queue; //map sorts by first argument,
     priority_queue.insert(0, start); //makes function first() very helpful
     QVector<QVector<int>> cost(width, QVector<int>(height));

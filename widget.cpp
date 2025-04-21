@@ -37,7 +37,7 @@ void Widget::setupUI() {
 
     debug = new QLabel("aaa", this);
     debug->setGeometry(300, 100, 100, 30);
-    mpdt.start = QPoint(50,50);
+    mpdt.start = QPoint(200,150);
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
