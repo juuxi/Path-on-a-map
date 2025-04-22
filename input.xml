@@ -3,6 +3,6 @@
     <Size width="500" height="500"/>
     <Margins left_map_margin="190"/>
     <Obstacles/>
-    <Start x="250" y="300"/>
-    <Finish x="400" y="400"/>
+    <Start x="400" y="400"/>
+    <Finish x="200" y="150"/>
 </Map>

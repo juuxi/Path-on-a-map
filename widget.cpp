@@ -135,7 +135,18 @@ void Widget::start_clicked() {
 }
 
 void Widget::finish_clicked() {
-
+    bool ok{};
+    int new_x = QInputDialog::getInt(this, tr("Установить финиш"),
+                                     tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
+    if (ok) {
+        mpdt.finish.setX(new_x);
+    }
+    int new_y = QInputDialog::getInt(this, tr("Установить финиш"),
+                                     tr("y:"), 0, 0, mpdt.height, 1, &ok);
+    if (ok) {
+        mpdt.finish.setY(new_y);
+    }
+    update();
 }
 
 void Widget::execute_clicked() {
