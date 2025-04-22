@@ -41,10 +41,6 @@ void Widget::setupUI() {
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
-    Obstacle obs;
-    obs.points = {QPoint(55,55), QPoint(55, 70), QPoint(70, 70), QPoint(70, 55)};
-    obs.impassability = 50;
-    mpdt.obstacles.push_back(obs);
     mpdt.left_map_margin = 150 + 2 * left_margin;
 
     start_point = new QLabel(this);

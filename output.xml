@@ -5,11 +5,12 @@
         <Margins left_map_margin="190"/>
         <Obstacles>
             <Obstacle impassability="50">
-                <Points count="4">
-                    <Point x="55" y="55"/>
-                    <Point x="55" y="70"/>
-                    <Point x="70" y="70"/>
-                    <Point x="70" y="55"/>
+                <Points count="5">
+                    <Point x="237" y="328"/>
+                    <Point x="238" y="228"/>
+                    <Point x="353" y="222"/>
+                    <Point x="438" y="317"/>
+                    <Point x="326" y="366"/>
                 </Points>
             </Obstacle>
         </Obstacles>
