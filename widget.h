@@ -10,6 +10,7 @@
 #include <QBitmap>
 #include <map.h>
 #include <QPainter>
+#include <QInputDialog>
 
 class Widget : public QWidget
 {

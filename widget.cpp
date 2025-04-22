@@ -104,7 +104,19 @@ void Widget::delete_obstacle_clicked() {
 }
 
 void Widget::change_size_clicked() {
-
+    bool ok{};
+    int new_width = QInputDialog::getInt(this, tr("QInputDialog::getText()"),
+                                        tr("New width:"), 0, 0, 2000, 1, &ok);
+    if (ok) {
+        mpdt.width = new_width;
+    }
+    int new_height = QInputDialog::getInt(this, tr("QInputDialog::getText()"),
+                                    tr("New height:"), 0, 0, 1000, 1, &ok);
+    if (ok) {
+        mpdt.height = new_height;
+    }
+    Widget::setFixedWidth(new_width);
+    Widget::setFixedHeight(new_height);
 }
 
 void Widget::start_clicked() {
@@ -165,7 +177,6 @@ void Widget::mouseDoubleClickEvent(QMouseEvent*) {
         new_poly_points.clear();
         to_add.impassability = 50;
         mpdt.obstacles.push_back(to_add);
-        xml.WriteInFile("../../input.xml", mpdt);
         update();
     }
 }
