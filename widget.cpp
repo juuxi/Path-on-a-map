@@ -105,13 +105,13 @@ void Widget::delete_obstacle_clicked() {
 
 void Widget::change_size_clicked() {
     bool ok{};
-    int new_width = QInputDialog::getInt(this, tr("QInputDialog::getText()"),
-                                        tr("New width:"), 0, 0, 2000, 1, &ok);
+    int new_width = QInputDialog::getInt(this, tr("Change size"),
+                                        tr("Новая ширина:"), 0, 0, 2000, 1, &ok);
     if (ok) {
         mpdt.width = new_width;
     }
-    int new_height = QInputDialog::getInt(this, tr("QInputDialog::getText()"),
-                                    tr("New height:"), 0, 0, 1000, 1, &ok);
+    int new_height = QInputDialog::getInt(this, tr("Изменить размеры"),
+                                    tr("Новая высота:"), 0, 0, 1000, 1, &ok);
     if (ok) {
         mpdt.height = new_height;
     }
@@ -120,7 +120,18 @@ void Widget::change_size_clicked() {
 }
 
 void Widget::start_clicked() {
-
+    bool ok{};
+    int new_x = QInputDialog::getInt(this, tr("Установить старт"),
+                                         tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
+    if (ok) {
+        mpdt.start.setX(new_x);
+    }
+    int new_y = QInputDialog::getInt(this, tr("Установить старт"),
+                                     tr("y:"), 0, 0, mpdt.height, 1, &ok);
+    if (ok) {
+        mpdt.start.setY(new_y);
+    }
+    update();
 }
 
 void Widget::finish_clicked() {
