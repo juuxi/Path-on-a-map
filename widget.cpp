@@ -110,6 +110,12 @@ void Widget::start_clicked() {
     if (ok) {
         mpdt.start.setY(new_y);
     }
+    QString s;
+    s += "Финиш: ";
+    s += QString::number(mpdt.start.x());
+    s += ",";
+    s += QString::number(mpdt.start.y());
+    start_point->setText(s);
     update();
 }
 
@@ -125,6 +131,12 @@ void Widget::finish_clicked() {
     if (ok) {
         mpdt.finish.setY(new_y);
     }
+    QString s;
+    s += "Старт: ";
+    s += QString::number(mpdt.finish.x());
+    s += ",";
+    s += QString::number(mpdt.finish.y());
+    finish_point->setText(s);
     update();
 }
 

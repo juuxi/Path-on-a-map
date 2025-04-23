@@ -4,8 +4,8 @@
         <Size width="500" height="500"/>
         <Margins left_map_margin="190"/>
         <Obstacles/>
-        <Start x="400" y="400"/>
-        <Finish x="200" y="150"/>
+        <Start x="250" y="170"/>
+        <Finish x="300" y="460"/>
     </Input>
     <Path>
         <Points count="1">
