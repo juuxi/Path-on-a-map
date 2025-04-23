@@ -18,7 +18,6 @@ class Widget : public QWidget
     QPushButton *add_obstacle_btn;
     QPushButton *delete_obstacle_btn;
     QPushButton *start_btn;
-    QPushButton *change_size_btn;
     QPushButton *finish_btn; //кнопка "установить точку финиша"
     QPushButton *execute_btn;
 
@@ -52,7 +51,6 @@ private slots:
     void add_obstacle_clicked();
     void delete_obstacle_clicked();
     void start_clicked();
-    void change_size_clicked();
     void finish_clicked();
     void execute_clicked();
 };

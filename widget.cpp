@@ -23,10 +23,6 @@ void Widget::setupUI() {
     start_btn->setFixedSize(150, 50);
     connect(start_btn, &QPushButton::clicked, this, &Widget::start_clicked);
 
-    change_size_btn = new QPushButton("Изменить размер карты", this);
-    change_size_btn->setFixedSize(150, 50);
-    connect(change_size_btn, &QPushButton::clicked, this, &Widget::change_size_clicked);
-
     finish_btn = new QPushButton("Финиш", this);
     finish_btn->setFixedSize(150, 50);
     connect(finish_btn, &QPushButton::clicked, this, &Widget::finish_clicked);
@@ -67,6 +63,8 @@ void Widget::setupUI() {
 
 void Widget::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
+    mpdt.width = width();
+    mpdt.height = height();
     reposition_buttons();
 }
 
@@ -86,9 +84,6 @@ void Widget::reposition_buttons() {
     start_btn->move(left_margin, topOffset);
     topOffset += start_btn->height() + spacing;
 
-    change_size_btn->move(left_margin, topOffset);
-    topOffset += change_size_btn->height() + spacing;
-
     finish_btn->move(left_margin, topOffset);
     topOffset += finish_btn->height() + spacing;
 
@@ -101,22 +96,6 @@ void Widget::add_obstacle_clicked() {
 
 void Widget::delete_obstacle_clicked() {
     is_deleting_obstacle = true;
-}
-
-void Widget::change_size_clicked() {
-    bool ok{};
-    int new_width = QInputDialog::getInt(this, tr("Change size"),
-                                        tr("Новая ширина:"), 0, 0, 2000, 1, &ok);
-    if (ok) {
-        mpdt.width = new_width;
-    }
-    int new_height = QInputDialog::getInt(this, tr("Изменить размеры"),
-                                    tr("Новая высота:"), 0, 0, 1000, 1, &ok);
-    if (ok) {
-        mpdt.height = new_height;
-    }
-    Widget::setFixedWidth(new_width);
-    Widget::setFixedHeight(new_height);
 }
 
 void Widget::start_clicked() {
