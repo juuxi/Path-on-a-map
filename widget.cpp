@@ -156,17 +156,22 @@ void Widget::paintEvent(QPaintEvent*) {
     p.end();
 }
 
-void Widget::mousePressEvent(QMouseEvent*) {
-    if (is_adding_obstacle) {
+void Widget::mousePressEvent(QMouseEvent* event) {
+    if (is_adding_obstacle && event->button() == Qt::LeftButton) {
         new_poly_points.append(QCursor::pos());
     }
-    if (is_deleting_obstacle) {
+    if (is_deleting_obstacle && event->button() == Qt::LeftButton) {
         for(const Obstacle& obstacle: mpdt.obstacles) {
             QPolygon poly(obstacle.points);
             if(poly.containsPoint(QCursor::pos(), Qt::OddEvenFill)) {
                 mpdt.obstacles.removeAt(mpdt.obstacles.indexOf(obstacle));
             }
         }
+    }
+    if (event->button() == Qt::RightButton) {
+        is_adding_obstacle = false;
+        is_deleting_obstacle = false;
+        new_poly_points.clear();
     }
     update();
 }
@@ -178,6 +183,7 @@ void Widget::mouseDoubleClickEvent(QMouseEvent*) {
         new_poly_points.clear();
         to_add.impassability = 50;
         mpdt.obstacles.push_back(to_add);
+        is_adding_obstacle = false;
         update();
     }
 }
