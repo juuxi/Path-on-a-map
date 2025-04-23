@@ -1,7 +1,7 @@
 #include "map.h"
 #include <math.h>
 
-Map::Map() : came_from(500, QVector<QPoint>(500)) {//[x,y]
+Map::Map() {
     width = 500;
     height = 500;
 }
@@ -56,6 +56,10 @@ int Map::FindPath() {
         for (int j = 0; j < height; j++) {
             cost[i][j] = 0;
         }
+    }
+    came_from.resize(width);
+    for (int i = 0; i < came_from.size(); i++) {
+        came_from[i].resize(height);
     }
     came_from[start.x()][start.y()] = start; //or null
     cost[start.x()][start.y()] = 0; //before stepping into curr
