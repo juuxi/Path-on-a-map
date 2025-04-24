@@ -139,7 +139,17 @@ void Widget::paintEvent(QPaintEvent*) {
 
 void Widget::mousePressEvent(QMouseEvent* event) {
     if (is_adding_obstacle && event->button() == Qt::LeftButton) {
-        new_poly_points.append(QCursor::pos());
+        if (QCursor::pos().x() >= mpdt.left_map_margin) {
+            new_poly_points.append(QCursor::pos());
+        }
+        else {
+            QMessageBox msg_box;
+            QString s;
+            s += "Нельзя ставить точку левее x=";
+            s += QString::number(mpdt.left_map_margin);
+            msg_box.setText(s);
+            msg_box.exec();
+        }
     }
     if (is_deleting_obstacle && event->button() == Qt::LeftButton) {
         for(const Obstacle& obstacle: mpdt.obstacles) {
@@ -162,7 +172,7 @@ void Widget::mouseDoubleClickEvent(QMouseEvent*) {
         Obstacle to_add;
         to_add.points = new_poly_points;
         new_poly_points.clear();
-        to_add.impassability = 50;
+        to_add.impassability = 10;
         mpdt.obstacles.push_back(to_add);
         is_adding_obstacle = false;
         update();

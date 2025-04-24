@@ -11,6 +11,7 @@
 #include <map.h>
 #include <QPainter>
 #include <QInputDialog>
+#include <QMessageBox>
 #include <QMouseEvent>
 
 class Widget : public QWidget
