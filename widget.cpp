@@ -4,6 +4,7 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent) {
     is_adding_obstacle = false;
     is_deleting_obstacle = false;
+    is_executing = false;
     setupUI();
 }
 
@@ -114,6 +115,7 @@ void Widget::execute_clicked() {
     xml.WriteInFile("../../input.xml", mpdt);
     s += QString().number(map.FindPath());
     debug->setText(s);
+    is_executing = true;
     update();
 }
 
@@ -133,7 +135,10 @@ void Widget::paintEvent(QPaintEvent*) {
     p.drawEllipse(mpdt.start, 10, 10);
     p.setBrush(QBrush(QColor(0, 255, 0)));
     p.drawEllipse(mpdt.finish, 10, 10);
-    map.PaintPath(&p);
+    if (is_executing) {
+        map.PaintPath(&p);
+        is_executing = false;
+    }
     p.end();
 }
 

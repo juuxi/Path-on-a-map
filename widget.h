@@ -35,6 +35,7 @@ class Widget : public QWidget
     QVector<QPoint> new_poly_points;
     bool is_adding_obstacle;
     bool is_deleting_obstacle;
+    bool is_executing;
 
 public:
     Widget(QWidget *parent = nullptr);
