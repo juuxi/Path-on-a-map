@@ -100,18 +100,18 @@ void Widget::delete_obstacle_clicked() {
 
 void Widget::start_clicked() {
     bool ok{};
-    int new_x = QInputDialog::getInt(this, tr("Установить старт"),
+    int new_x = QInputDialog::getInt(this, tr("Старт"),
                                          tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
     if (ok) {
         mpdt.start.setX(new_x);
     }
-    int new_y = QInputDialog::getInt(this, tr("Установить старт"),
+    int new_y = QInputDialog::getInt(this, tr("Старт"),
                                      tr("y:"), 0, 0, mpdt.height, 1, &ok);
     if (ok) {
         mpdt.start.setY(new_y);
     }
     QString s;
-    s += "Финиш: ";
+    s += "Старт: ";
     s += QString::number(mpdt.start.x());
     s += ",";
     s += QString::number(mpdt.start.y());
@@ -121,18 +121,18 @@ void Widget::start_clicked() {
 
 void Widget::finish_clicked() {
     bool ok{};
-    int new_x = QInputDialog::getInt(this, tr("Установить финиш"),
+    int new_x = QInputDialog::getInt(this, tr("Финиш"),
                                      tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
     if (ok) {
         mpdt.finish.setX(new_x);
     }
-    int new_y = QInputDialog::getInt(this, tr("Установить финиш"),
+    int new_y = QInputDialog::getInt(this, tr("Финиш"),
                                      tr("y:"), 0, 0, mpdt.height, 1, &ok);
     if (ok) {
         mpdt.finish.setY(new_y);
     }
     QString s;
-    s += "Старт: ";
+    s += "Финиш: ";
     s += QString::number(mpdt.finish.x());
     s += ",";
     s += QString::number(mpdt.finish.y());

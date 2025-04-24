@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Route>
     <Input>
-        <Size width="1178" height="653"/>
+        <Size width="500" height="500"/>
         <Margins left_map_margin="190"/>
-        <Obstacles>
-            <Obstacle impassability="50">
-                <Points count="7">
-                    <Point x="253" y="360"/>
-                    <Point x="358" y="194"/>
-                    <Point x="539" y="223"/>
-                    <Point x="558" y="269"/>
-                    <Point x="517" y="406"/>
-                    <Point x="490" y="533"/>
-                    <Point x="319" y="494"/>
-                </Points>
-            </Obstacle>
-        </Obstacles>
-        <Start x="200" y="150"/>
-        <Finish x="711" y="400"/>
+        <Obstacles/>
+        <Start x="250" y="400"/>
+        <Finish x="400" y="400"/>
     </Input>
     <Path>
         <Points count="1">
