@@ -26,9 +26,8 @@ class Widget : public QWidget
     const int top_margin = 10;
     const int bottom_margin = 10;
 
-    QLabel* start_point; //метка "старт"
-    QLabel* finish_point; //метка "старт"
-    QLabel* debug;
+    QLabel *debug;
+
     Map map;
     Xml xml;
     MapData mpdt;

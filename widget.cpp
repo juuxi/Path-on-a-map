@@ -30,33 +30,14 @@ void Widget::setupUI() {
     execute_btn = new QPushButton("Выполнить", this);
     execute_btn->setFixedSize(150, 50);
     connect(execute_btn, &QPushButton::clicked, this, &Widget::execute_clicked);
-
-    debug = new QLabel("aaa", this);
-    debug->setGeometry(300, 100, 100, 30);
     mpdt.start = QPoint(200,150);
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
     mpdt.left_map_margin = 150 + 2 * left_margin;
 
-    start_point = new QLabel(this);
-    start_point->setGeometry(200, 30, 125, 30);
-    QString s;
-    s += "Финиш: ";
-    s += QString::number(mpdt.start.x());
-    s += ",";
-    s += QString::number(mpdt.start.y());
-    start_point->setText(s);
-
-    finish_point = new QLabel(this);
-    finish_point->setGeometry(350, 30, 125, 30);
-    s.clear();
-    s += "Старт: ";
-    s += QString::number(mpdt.finish.x());
-    s += ",";
-    s += QString::number(mpdt.finish.y());
-    finish_point->setText(s);
-
+    debug = new QLabel(this);
+    debug->setGeometry(mpdt.left_map_margin, 10, 50, 30);
 
     reposition_buttons();
 }
@@ -110,12 +91,6 @@ void Widget::start_clicked() {
     if (ok) {
         mpdt.start.setY(new_y);
     }
-    QString s;
-    s += "Старт: ";
-    s += QString::number(mpdt.start.x());
-    s += ",";
-    s += QString::number(mpdt.start.y());
-    start_point->setText(s);
     update();
 }
 
@@ -131,12 +106,6 @@ void Widget::finish_clicked() {
     if (ok) {
         mpdt.finish.setY(new_y);
     }
-    QString s;
-    s += "Финиш: ";
-    s += QString::number(mpdt.finish.x());
-    s += ",";
-    s += QString::number(mpdt.finish.y());
-    finish_point->setText(s);
     update();
 }
 
