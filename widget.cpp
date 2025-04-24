@@ -170,5 +170,12 @@ void Widget::mouseDoubleClickEvent(QMouseEvent*) {
 }
 
 Widget::~Widget() {
+    delete add_obstacle_btn;
+    delete delete_obstacle_btn;
+    delete start_btn;
+    delete finish_btn;
+    delete execute_btn;
+
+    delete debug;
 }
 
