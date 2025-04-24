@@ -83,9 +83,16 @@ int Map::FindPath() {
             }
         }
     }
+
     QList<QPoint> test;
-    test.push_back(QPoint(1,0));
-    xml_processor.WriteOutFile("../../output.xml", mpdt, test, 1, 1);
+    QPoint curr = finish;
+    while (curr != start) {
+        QPoint from = came_from[curr.x()][curr.y()];
+        test.push_front(curr);
+        curr = from;
+    }
+    xml_processor.WriteOutFile("../../output.xml", mpdt, test, test.size(), cost[finish.x()][finish.y()]);
+
     return cost[finish.x()][finish.y()];
 }
 
