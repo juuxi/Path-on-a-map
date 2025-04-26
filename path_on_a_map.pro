@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     map.cpp \
+    priorityqueue.cpp \
     widget.cpp \
     xml.cpp
 
 HEADERS += \
     map.h \
+    priorityqueue.h \
     widget.h \
     xml.h
 

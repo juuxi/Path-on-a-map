@@ -40,6 +40,32 @@ void Widget::setupUI() {
     debug = new QLabel(this);
     debug->setGeometry(mpdt.left_map_margin, 10, 50, 30);
 
+    Obstacle obs;
+    QVector<QPoint> point;
+
+    /*<Points count="8">
+        <Point x="421" y="49"/>
+        <Point x="232" y="39"/>
+        <Point x="210" y="449"/>
+        <Point x="267" y="459"/>
+        <Point x="348" y="319"/>
+        <Point x="223" y="238"/>
+        <Point x="230" y="200"/>
+        <Point x="421" y="150"/>*/
+    point.push_back(QPoint(421, 49));
+    point.push_back(QPoint(232, 39));
+    point.push_back(QPoint(210, 449));
+    point.push_back(QPoint(267, 459));
+    point.push_back(QPoint(348, 319));
+    point.push_back(QPoint(223, 238));
+    point.push_back(QPoint(230, 200));
+    point.push_back(QPoint(421, 150));
+    obs.points = point;
+    obs.impassability = 50;
+    QList<Obstacle> obss;
+    obss.push_back(obs);
+    mpdt.obstacles = obss;
+
     reposition_buttons();
 }
 

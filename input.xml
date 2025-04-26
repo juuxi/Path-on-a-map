@@ -3,16 +3,19 @@
     <Size width="500" height="500"/>
     <Margins left_map_margin="190"/>
     <Obstacles>
-        <Obstacle impassability="10">
-            <Points count="5">
-                <Point x="279" y="165"/>
-                <Point x="204" y="165"/>
-                <Point x="208" y="226"/>
-                <Point x="271" y="240"/>
-                <Point x="290" y="206"/>
+        <Obstacle impassability="50">
+            <Points count="8">
+                <Point x="421" y="49"/>
+                <Point x="232" y="39"/>
+                <Point x="210" y="449"/>
+                <Point x="267" y="459"/>
+                <Point x="348" y="319"/>
+                <Point x="223" y="238"/>
+                <Point x="230" y="200"/>
+                <Point x="421" y="150"/>
             </Points>
         </Obstacle>
     </Obstacles>
-    <Start x="230" y="200"/>
+    <Start x="200" y="150"/>
     <Finish x="400" y="400"/>
 </Map>

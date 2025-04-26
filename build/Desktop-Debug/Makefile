@@ -54,10 +54,12 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../../main.cpp \
 		../../map.cpp \
+		../../priorityqueue.cpp \
 		../../widget.cpp \
 		../../xml.cpp moc_widget.cpp
 OBJECTS       = main.o \
 		map.o \
+		priorityqueue.o \
 		widget.o \
 		xml.o \
 		moc_widget.o
@@ -140,9 +142,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../../../../path_on_a_map.pro ../../map.h \
+		../../priorityqueue.h \
 		../../widget.h \
 		../../xml.h ../../main.cpp \
 		../../map.cpp \
+		../../priorityqueue.cpp \
 		../../widget.cpp \
 		../../xml.cpp
 QMAKE_TARGET  = path_on_a_map
@@ -330,8 +334,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../map.h ../../widget.h ../../xml.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../main.cpp ../../map.cpp ../../widget.cpp ../../xml.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../map.h ../../priorityqueue.h ../../widget.h ../../xml.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../main.cpp ../../map.cpp ../../priorityqueue.cpp ../../widget.cpp ../../xml.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -368,6 +372,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_widget.cpp
 moc_widget.cpp: ../../widget.h \
 		../../map.h \
+		../../xml.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/juuxi/Desktop/prog/ETU/2nd_course/Path-on-a-map/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/juuxi/Desktop/prog/ETU/2nd_course/Path-on-a-map -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../widget.h -o moc_widget.cpp
@@ -389,14 +394,20 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 ####### Compile
 
 main.o: ../../main.cpp ../../widget.h \
-		../../map.h
+		../../map.h \
+		../../xml.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
 
-map.o: ../../map.cpp ../../map.h
+map.o: ../../map.cpp ../../map.h \
+		../../xml.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o map.o ../../map.cpp
 
+priorityqueue.o: ../../priorityqueue.cpp ../../priorityqueue.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o priorityqueue.o ../../priorityqueue.cpp
+
 widget.o: ../../widget.cpp ../../widget.h \
-		../../map.h
+		../../map.h \
+		../../xml.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget.o ../../widget.cpp
 
 xml.o: ../../xml.cpp ../../xml.h
