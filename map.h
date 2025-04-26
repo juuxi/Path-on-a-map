@@ -1,9 +1,9 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <QPoint>
 #include <QMap>
 #include <QPainter>
+#include <priorityqueue.h>
 #include "xml.h"
 
 class Map

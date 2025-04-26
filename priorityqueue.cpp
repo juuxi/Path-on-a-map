@@ -11,13 +11,18 @@ PriorityQueue::PriorityQueue() {
 
 }
 
+void PriorityQueue::push_back(QPair<int, QPoint> elem) {
+    QVector::push_back(elem);
+    sort();
+}
+
 void PriorityQueue::sort() {
     for(size_t i = 1; i < size(); i++)
     {
-        QPair<unsigned, QPoint> value = operator [](i);
-        for (int j = i-1; j >= size() && value < operator [](j); j--)
+        QPair<int, QPoint> value = operator [](i);
+        for (int j = i-1; j >= 0 && value < operator [](j); j--)
         {
-            QPair<unsigned, QPoint> temp = operator [](j);
+            QPair<int, QPoint> temp = operator [](j);
             operator [](j) = operator [](j+1);
             operator [](j+1) = temp;
         }

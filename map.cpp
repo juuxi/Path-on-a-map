@@ -49,8 +49,8 @@ int Map::FindPath() {
     width = mpdt.width;
     obstacles = mpdt.obstacles;
     left_margin = mpdt.left_map_margin;
-    QMap<int, QPoint> priority_queue; //map sorts by first argument,
-    priority_queue.insert(0, start); //makes function first() very helpful
+    PriorityQueue priority_queue; //map sorts by first argument,
+    priority_queue.push_back(QPair<int, QPoint>(0, start)); //makes function first() very helpful
     QVector<QVector<int>> cost(width+1, QVector<int>(height+1));
     for (int i = 0; i < width+1; i++) {
         for (int j = 0; j < height+1; j++) {
@@ -64,10 +64,8 @@ int Map::FindPath() {
     came_from[start.x()][start.y()] = start; //or null
     cost[start.x()][start.y()] = 0; //before stepping into curr
     while (!priority_queue.empty()) {
-        QPoint curr = priority_queue.first();
-        priority_queue.remove(priority_queue.firstKey());
-        if (curr == QPoint(201, 153))
-            printf("b");
+        QPoint curr = priority_queue.front().second;
+        priority_queue.pop_front();
         QVector<QPoint> neighbors = FindNeighbors(curr);
 
         if (curr == finish) {
@@ -75,13 +73,13 @@ int Map::FindPath() {
         }
 
         for (QPoint neighbor: neighbors) {
-            if (neighbor.x() == 224)
-                printf("a");
             int new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor);
+            if (neighbor.x() == 250)
+                printf("a");
             //of moving from curr to neighbor
             if (cost[neighbor.x()][neighbor.y()] == 0 || new_cost < cost[neighbor.x()][neighbor.y()]) {
                 int priority = new_cost + Heuristic(finish, neighbor);
-                priority_queue.insert(priority, neighbor);
+                priority_queue.push_back(QPair<int, QPoint>(priority, neighbor));
                 cost[neighbor.x()][neighbor.y()] = new_cost;
                 came_from[neighbor.x()][neighbor.y()] = curr;
             }
