@@ -9,10 +9,7 @@ class PriorityQueue : public QVector<QPair<int, QPoint>>
 {
 public:
     PriorityQueue();
-    void insertionSort(int, int);
-    int getMinrun(int);
-    void merge(int, int, int);
-    void TimSort();
+    void place_elem();
     void push_back(QPair<int, QPoint>);
 };
 
