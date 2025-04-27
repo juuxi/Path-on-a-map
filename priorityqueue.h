@@ -3,12 +3,16 @@
 
 #include <QVector>
 #include <QPoint>
+#include <algorithm>
 
 class PriorityQueue : public QVector<QPair<int, QPoint>>
 {
 public:
     PriorityQueue();
-    void sort();
+    void insertionSort(int, int);
+    int getMinrun(int);
+    void merge(int, int, int);
+    void TimSort();
     void push_back(QPair<int, QPoint>);
 };
 
