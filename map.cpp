@@ -102,9 +102,19 @@ void Map::PaintPath(QPainter* p) {
     QPoint curr = finish;
     p->setPen(QPen(QColor(255, 0, 0)));
     while (curr != start) {
-        QPoint from = came_from[curr.x()][curr.y()];
-        p->drawLine(curr.x(), curr.y(), from.x(), from.y());
-        curr = from;
+        for (int i = 0; i < 6; i++) {
+            QPoint from = came_from[curr.x()][curr.y()];
+            p->drawLine(curr.x(), curr.y(), from.x(), from.y());
+            curr = from;
+            if (curr == start)
+                break;
+        }
+        for (int i = 0; i < 4; i++) {
+            QPoint from = came_from[curr.x()][curr.y()];
+            curr = from;
+            if (curr == start)
+                break;
+        }
     }
 }
 
