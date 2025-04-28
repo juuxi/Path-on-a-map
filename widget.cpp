@@ -40,32 +40,6 @@ void Widget::setupUI() {
     debug = new QLabel(this);
     debug->setGeometry(mpdt.left_map_margin, 10, 50, 30);
 
-    Obstacle obs;
-    QVector<QPoint> point;
-
-    /*<Points count="8">
-        <Point x="421" y="49"/>
-        <Point x="232" y="39"/>
-        <Point x="210" y="449"/>
-        <Point x="267" y="459"/>
-        <Point x="348" y="319"/>
-        <Point x="223" y="238"/>
-        <Point x="230" y="200"/>
-        <Point x="421" y="150"/>*/
-    point.push_back(QPoint(421, 49));
-    point.push_back(QPoint(232, 39));
-    point.push_back(QPoint(210, 449));
-    point.push_back(QPoint(267, 459));
-    point.push_back(QPoint(348, 319));
-    point.push_back(QPoint(223, 238));
-    point.push_back(QPoint(230, 200));
-    point.push_back(QPoint(421, 150));
-    obs.points = point;
-    obs.impassability = 50;
-    QList<Obstacle> obss;
-    obss.push_back(obs);
-    mpdt.obstacles = obss;
-
     reposition_buttons();
 }
 
@@ -148,19 +122,19 @@ void Widget::execute_clicked() {
 void Widget::paintEvent(QPaintEvent*) {
     QPainter p;
     p.begin(this);
-    p.setBrush(QBrush(QColor(120)));
     p.setPen(QPen(QColor(50)));
     for (int i = 1; i < new_poly_points.size(); i++) {
         p.drawLine(new_poly_points[i-1], new_poly_points[i]);
     }
     for (Obstacle obstacle: mpdt.obstacles) {
         QPolygon poly(obstacle.points);
+        p.setBrush(QBrush(QColor(0, 0, 255 - 2 * obstacle.impassability)));
         p.drawPolygon(poly);
     }
     p.setBrush(QBrush(QColor(255, 0, 0)));
-    p.drawEllipse(mpdt.start, 10, 10);
+    p.drawEllipse(mpdt.start, 5, 5);
     p.setBrush(QBrush(QColor(0, 255, 0)));
-    p.drawEllipse(mpdt.finish, 10, 10);
+    p.drawEllipse(mpdt.finish, 5, 5);
     if (is_executing) {
         map.PaintPath(&p);
         is_executing = false;
@@ -203,7 +177,8 @@ void Widget::mouseDoubleClickEvent(QMouseEvent*) {
         Obstacle to_add;
         to_add.points = new_poly_points;
         new_poly_points.clear();
-        to_add.impassability = 10;
+        to_add.impassability = QInputDialog::getInt(this, tr("Препятствие"),
+                                         tr("Непроходимость:"), 0, 1, 100, 1, NULL);
         mpdt.obstacles.push_back(to_add);
         is_adding_obstacle = false;
         update();
