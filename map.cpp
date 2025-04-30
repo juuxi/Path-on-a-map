@@ -74,8 +74,6 @@ int Map::FindPath() {
 
         for (QPoint neighbor: neighbors) {
             int new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor);
-            if (neighbor.x() == 250)
-                printf("a");
             //of moving from curr to neighbor
             if (cost[neighbor.x()][neighbor.y()] == 0 || new_cost < cost[neighbor.x()][neighbor.y()]) {
                 int priority = new_cost + Heuristic(finish, neighbor);

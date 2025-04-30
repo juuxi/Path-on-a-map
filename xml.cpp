@@ -4,12 +4,12 @@ Xml::Xml() {
 
 }
 
-MapData Xml::ReadInFile(const QString& filePath) {
-    MapData mapData;
-    QFile file(filePath);
+MapData Xml::ReadInFile(const QString& file_path) {
+    MapData map_data;
+    QFile file(file_path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open file:" << filePath;
-        return mapData;
+        qWarning() << "Failed to open file:" << file_path;
+        return map_data;
     }
 
     QXmlStreamReader xml(&file);
@@ -19,10 +19,10 @@ MapData Xml::ReadInFile(const QString& filePath) {
 
         if (token == QXmlStreamReader::StartElement) {
             if (xml.name() == "Size") {
-                mapData.width = xml.attributes().value("width").toInt();
-                mapData.height = xml.attributes().value("height").toInt();
+                map_data.width = xml.attributes().value("width").toInt();
+                map_data.height = xml.attributes().value("height").toInt();
             } else if (xml.name() == "Margins") {
-                mapData.left_map_margin = xml.attributes().value("left_map_margin").toInt();
+                map_data.left_map_margin = xml.attributes().value("left_map_margin").toInt();
             } else if (xml.name() == "Obstacle") {
                 Obstacle obstacle;
                 obstacle.impassability = xml.attributes().value("impassability").toInt();
@@ -35,13 +35,13 @@ MapData Xml::ReadInFile(const QString& filePath) {
                         obstacle.points.append(point);
                     }
                 }
-                mapData.obstacles.append(obstacle);
+                map_data.obstacles.append(obstacle);
             } else if (xml.name() == "Start") {
-                mapData.start.setX(xml.attributes().value("x").toInt());
-                mapData.start.setY(xml.attributes().value("y").toInt());
+                map_data.start.setX(xml.attributes().value("x").toInt());
+                map_data.start.setY(xml.attributes().value("y").toInt());
             } else if (xml.name() == "Finish") {
-                mapData.finish.setX(xml.attributes().value("x").toInt());
-                mapData.finish.setY(xml.attributes().value("y").toInt());
+                map_data.finish.setX(xml.attributes().value("x").toInt());
+                map_data.finish.setY(xml.attributes().value("y").toInt());
             }
         }
     }
@@ -51,14 +51,14 @@ MapData Xml::ReadInFile(const QString& filePath) {
     }
 
     file.close();
-    return mapData;
+    return map_data;
 }
 
-PathData Xml::ReadOutFile(const QString& filePath) {
+PathData Xml::ReadOutFile(const QString& file_path) {
     PathData path_data;
-    QFile file(filePath);
+    QFile file(file_path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open file:" << filePath;
+        qWarning() << "Failed to open file:" << file_path;
         return path_data;
     }
 
@@ -84,10 +84,10 @@ PathData Xml::ReadOutFile(const QString& filePath) {
     return path_data;
 }
 
-void Xml::WriteOutFile(const QString& filePath, const MapData& inputData, const QList<QPoint>& path, double distance, double time) {
-    QFile file(filePath);
+void Xml::WriteOutFile(const QString& file_path, const MapData& input_data, const QList<QPoint>& path, double distance, double time) {
+    QFile file(file_path);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open file for writing:" << filePath;
+        qWarning() << "Failed to open file for writing:" << file_path;
         return;
     }
 
@@ -100,16 +100,16 @@ void Xml::WriteOutFile(const QString& filePath, const MapData& inputData, const 
     // Input section
     xml.writeStartElement("Input");
     xml.writeStartElement("Size");
-    xml.writeAttribute("width", QString::number(inputData.width));
-    xml.writeAttribute("height", QString::number(inputData.height));
+    xml.writeAttribute("width", QString::number(input_data.width));
+    xml.writeAttribute("height", QString::number(input_data.height));
     xml.writeEndElement(); // Size
 
     xml.writeStartElement("Margins");
-    xml.writeAttribute("left_map_margin", QString::number(inputData.left_map_margin));
+    xml.writeAttribute("left_map_margin", QString::number(input_data.left_map_margin));
     xml.writeEndElement();
 
     xml.writeStartElement("Obstacles");
-    for (const auto& obstacle : inputData.obstacles) {
+    for (const auto& obstacle : input_data.obstacles) {
         xml.writeStartElement("Obstacle");
         xml.writeAttribute("impassability", QString::number(obstacle.impassability));
 
@@ -128,13 +128,13 @@ void Xml::WriteOutFile(const QString& filePath, const MapData& inputData, const 
     xml.writeEndElement(); // Obstacles
 
     xml.writeStartElement("Start");
-    xml.writeAttribute("x", QString::number(inputData.start.x()));
-    xml.writeAttribute("y", QString::number(inputData.start.y()));
+    xml.writeAttribute("x", QString::number(input_data.start.x()));
+    xml.writeAttribute("y", QString::number(input_data.start.y()));
     xml.writeEndElement(); // Start
 
     xml.writeStartElement("Finish");
-    xml.writeAttribute("x", QString::number(inputData.finish.x()));
-    xml.writeAttribute("y", QString::number(inputData.finish.y()));
+    xml.writeAttribute("x", QString::number(input_data.finish.x()));
+    xml.writeAttribute("y", QString::number(input_data.finish.y()));
     xml.writeEndElement(); // Finish
 
     xml.writeEndElement(); // Input
@@ -164,10 +164,10 @@ void Xml::WriteOutFile(const QString& filePath, const MapData& inputData, const 
     file.close();
 }
 
-void Xml::WriteInFile(const QString& filePath, const MapData& inputData){
-    QFile file(filePath);
+void Xml::WriteInFile(const QString& file_path, const MapData& input_data){
+    QFile file(file_path);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open file for writing:" << filePath;
+        qWarning() << "Failed to open file for writing:" << file_path;
         return;
     }
 
@@ -179,16 +179,16 @@ void Xml::WriteInFile(const QString& filePath, const MapData& inputData){
 
     // Input section
     xml.writeStartElement("Size");
-    xml.writeAttribute("width", QString::number(inputData.width));
-    xml.writeAttribute("height", QString::number(inputData.height));
+    xml.writeAttribute("width", QString::number(input_data.width));
+    xml.writeAttribute("height", QString::number(input_data.height));
     xml.writeEndElement(); // Size
 
     xml.writeStartElement("Margins");
-    xml.writeAttribute("left_map_margin", QString::number(inputData.left_map_margin));
+    xml.writeAttribute("left_map_margin", QString::number(input_data.left_map_margin));
     xml.writeEndElement();
 
     xml.writeStartElement("Obstacles");
-    for (const auto& obstacle : inputData.obstacles) {
+    for (const auto& obstacle : input_data.obstacles) {
         xml.writeStartElement("Obstacle");
         xml.writeAttribute("impassability", QString::number(obstacle.impassability));
 
@@ -207,13 +207,13 @@ void Xml::WriteInFile(const QString& filePath, const MapData& inputData){
     xml.writeEndElement(); // Obstacles
 
     xml.writeStartElement("Start");
-    xml.writeAttribute("x", QString::number(inputData.start.x()));
-    xml.writeAttribute("y", QString::number(inputData.start.y()));
+    xml.writeAttribute("x", QString::number(input_data.start.x()));
+    xml.writeAttribute("y", QString::number(input_data.start.y()));
     xml.writeEndElement(); // Start
 
     xml.writeStartElement("Finish");
-    xml.writeAttribute("x", QString::number(inputData.finish.x()));
-    xml.writeAttribute("y", QString::number(inputData.finish.y()));
+    xml.writeAttribute("x", QString::number(input_data.finish.x()));
+    xml.writeAttribute("y", QString::number(input_data.finish.y()));
     xml.writeEndElement(); // Finish
 
     xml.writeEndElement(); // Input

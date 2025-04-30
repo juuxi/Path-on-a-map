@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
     QByteArrayData data[7];
-    char stringdata0[98];
+    char stringdata0[91];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,17 +33,17 @@ struct qt_meta_stringdata_Widget_t {
 static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Widget"
-QT_MOC_LITERAL(1, 7, 20), // "add_obstacle_clicked"
-QT_MOC_LITERAL(2, 28, 0), // ""
-QT_MOC_LITERAL(3, 29, 23), // "delete_obstacle_clicked"
-QT_MOC_LITERAL(4, 53, 13), // "start_clicked"
-QT_MOC_LITERAL(5, 67, 14), // "finish_clicked"
-QT_MOC_LITERAL(6, 82, 15) // "execute_clicked"
+QT_MOC_LITERAL(1, 7, 18), // "AddObstacleClicked"
+QT_MOC_LITERAL(2, 26, 0), // ""
+QT_MOC_LITERAL(3, 27, 21), // "DeleteObstacleClicked"
+QT_MOC_LITERAL(4, 49, 12), // "StartClicked"
+QT_MOC_LITERAL(5, 62, 13), // "FinishClicked"
+QT_MOC_LITERAL(6, 76, 14) // "ExecuteClicked"
 
     },
-    "Widget\0add_obstacle_clicked\0\0"
-    "delete_obstacle_clicked\0start_clicked\0"
-    "finish_clicked\0execute_clicked"
+    "Widget\0AddObstacleClicked\0\0"
+    "DeleteObstacleClicked\0StartClicked\0"
+    "FinishClicked\0ExecuteClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,11 +83,11 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<Widget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->add_obstacle_clicked(); break;
-        case 1: _t->delete_obstacle_clicked(); break;
-        case 2: _t->start_clicked(); break;
-        case 3: _t->finish_clicked(); break;
-        case 4: _t->execute_clicked(); break;
+        case 0: _t->AddObstacleClicked(); break;
+        case 1: _t->DeleteObstacleClicked(); break;
+        case 2: _t->StartClicked(); break;
+        case 3: _t->FinishClicked(); break;
+        case 4: _t->ExecuteClicked(); break;
         default: ;
         }
     }

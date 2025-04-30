@@ -5,82 +5,79 @@ Widget::Widget(QWidget *parent)
     is_adding_obstacle = false;
     is_deleting_obstacle = false;
     is_executing = false;
-    setupUI();
+    SetupUI();
 }
 
-void Widget::setupUI() {
+void Widget::SetupUI() {
     setWindowTitle("Поиск кратчайшего пути на карте");
     setMinimumSize(500, 500);
 
     add_obstacle_btn = new QPushButton("Добавить объект", this);
     add_obstacle_btn->setFixedSize(150, 50);
-    connect(add_obstacle_btn, &QPushButton::clicked, this, &Widget::add_obstacle_clicked);
+    connect(add_obstacle_btn, &QPushButton::clicked, this, &Widget::AddObstacleClicked);
 
     delete_obstacle_btn = new QPushButton("Удалить объект", this);
     delete_obstacle_btn->setFixedSize(150, 50);
-    connect(delete_obstacle_btn, &QPushButton::clicked, this, &Widget::delete_obstacle_clicked);
+    connect(delete_obstacle_btn, &QPushButton::clicked, this, &Widget::DeleteObstacleClicked);
 
     start_btn = new QPushButton("Старт", this);
     start_btn->setFixedSize(150, 50);
-    connect(start_btn, &QPushButton::clicked, this, &Widget::start_clicked);
+    connect(start_btn, &QPushButton::clicked, this, &Widget::StartClicked);
 
     finish_btn = new QPushButton("Финиш", this);
     finish_btn->setFixedSize(150, 50);
-    connect(finish_btn, &QPushButton::clicked, this, &Widget::finish_clicked);
+    connect(finish_btn, &QPushButton::clicked, this, &Widget::FinishClicked);
 
     execute_btn = new QPushButton("Выполнить", this);
     execute_btn->setFixedSize(150, 50);
-    connect(execute_btn, &QPushButton::clicked, this, &Widget::execute_clicked);
+    connect(execute_btn, &QPushButton::clicked, this, &Widget::ExecuteClicked);
     mpdt.start = QPoint(200,150);
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
     mpdt.left_map_margin = 150 + 2 * left_margin;
 
-    debug = new QLabel(this);
-    debug->setGeometry(mpdt.left_map_margin, 10, 50, 30);
-
-    reposition_buttons();
+    RepositionButtons();
 }
 
 void Widget::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
     mpdt.width = width();
     mpdt.height = height();
-    reposition_buttons();
+    RepositionButtons();
 }
 
-void Widget::reposition_buttons() {
-    int windowHeight = height();
-    int availableHeight = windowHeight - top_margin - bottom_margin;
-    int totalButtonHeight = 6 * 50;
-    int spacing = (availableHeight - totalButtonHeight) / (6 + 1);
-    int topOffset = top_margin + spacing;
+void Widget::RepositionButtons() {
+    int window_height = height();
+    int available_height = window_height - top_margin - bottom_margin;
+    int total_button_height = 6 * 50;
+    int spacing = (available_height - total_button_height) / (6 + 1);
+    int top_offset = top_margin + spacing;
 
-    add_obstacle_btn->move(left_margin, topOffset);
-    topOffset += add_obstacle_btn->height() + spacing;
+    add_obstacle_btn->move(left_margin, top_offset);
+    top_offset += add_obstacle_btn->height() + spacing;
 
-    delete_obstacle_btn->move(left_margin, topOffset);
-    topOffset += delete_obstacle_btn->height() + spacing;
+    delete_obstacle_btn->move(left_margin, top_offset);
+    top_offset += delete_obstacle_btn->height() + spacing;
 
-    start_btn->move(left_margin, topOffset);
-    topOffset += start_btn->height() + spacing;
+    start_btn->move(left_margin, top_offset);
+    top_offset += start_btn->height() + spacing;
 
-    finish_btn->move(left_margin, topOffset);
-    topOffset += finish_btn->height() + spacing;
+    finish_btn->move(left_margin, top_offset);
+    top_offset += finish_btn->height() + spacing;
 
-    execute_btn->move(left_margin, topOffset);
+    execute_btn->move(left_margin, top_offset);
 }
 
-void Widget::add_obstacle_clicked() {
+void Widget::AddObstacleClicked() {
     is_adding_obstacle = true;
 }
 
-void Widget::delete_obstacle_clicked() {
+void Widget::DeleteObstacleClicked() {
     is_deleting_obstacle = true;
 }
 
-void Widget::start_clicked() {
+void Widget::StartClicked() {
     bool ok{};
     int new_x = QInputDialog::getInt(this, tr("Старт"),
                                          tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
@@ -95,7 +92,7 @@ void Widget::start_clicked() {
     update();
 }
 
-void Widget::finish_clicked() {
+void Widget::FinishClicked() {
     bool ok{};
     int new_x = QInputDialog::getInt(this, tr("Финиш"),
                                      tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
@@ -110,7 +107,7 @@ void Widget::finish_clicked() {
     update();
 }
 
-void Widget::execute_clicked() {
+void Widget::ExecuteClicked() {
     xml.WriteInFile("../../input.xml", mpdt);
     map.FindPath();
     is_executing = true;
@@ -201,7 +198,5 @@ Widget::~Widget() {
     delete start_btn;
     delete finish_btn;
     delete execute_btn;
-
-    delete debug;
 }
 

@@ -27,8 +27,6 @@ class Widget : public QWidget
     const int top_margin = 10;
     const int bottom_margin = 10;
 
-    QLabel *debug;
-
     Map map;
     Xml xml;
     MapData mpdt;
@@ -43,17 +41,17 @@ public:
     void paintEvent(QPaintEvent*);
     ~Widget();
 protected:
-    void resizeEvent(QResizeEvent *event) override;
+    void resizeEvent(QResizeEvent*) override;
 private:
     void mousePressEvent(QMouseEvent*);
     void mouseDoubleClickEvent(QMouseEvent*);
-    void setupUI();
-    void reposition_buttons();
+    void SetupUI();
+    void RepositionButtons();
 private slots:
-    void add_obstacle_clicked();
-    void delete_obstacle_clicked();
-    void start_clicked();
-    void finish_clicked();
-    void execute_clicked();
+    void AddObstacleClicked();
+    void DeleteObstacleClicked();
+    void StartClicked();
+    void FinishClicked();
+    void ExecuteClicked();
 };
 #endif // WIDGET_H
