@@ -3,28 +3,21 @@
     <Size width="500" height="500"/>
     <Margins left_map_margin="190"/>
     <Obstacles>
-        <Obstacle impassability="15">
-            <Points count="4">
-                <Point x="316" y="197"/>
-                <Point x="239" y="268"/>
-                <Point x="310" y="330"/>
-                <Point x="421" y="263"/>
+        <Obstacle impassability="2">
+            <Points count="5">
+                <Point x="314" y="174"/>
+                <Point x="206" y="248"/>
+                <Point x="240" y="345"/>
+                <Point x="387" y="236"/>
+                <Point x="382" y="141"/>
             </Points>
         </Obstacle>
-        <Obstacle impassability="20">
+        <Obstacle impassability="50">
             <Points count="4">
-                <Point x="435" y="308"/>
-                <Point x="347" y="348"/>
-                <Point x="367" y="372"/>
-                <Point x="460" y="348"/>
-            </Points>
-        </Obstacle>
-        <Obstacle impassability="100">
-            <Points count="4">
-                <Point x="255" y="171"/>
-                <Point x="209" y="203"/>
-                <Point x="233" y="225"/>
-                <Point x="281" y="191"/>
+                <Point x="388" y="267"/>
+                <Point x="307" y="318"/>
+                <Point x="307" y="364"/>
+                <Point x="397" y="309"/>
             </Points>
         </Obstacle>
     </Obstacles>

@@ -4,7 +4,7 @@ Xml::Xml() {
 
 }
 
-MapData Xml::ReadFile(const QString& filePath) {
+MapData Xml::ReadInFile(const QString& filePath) {
     MapData mapData;
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -52,6 +52,36 @@ MapData Xml::ReadFile(const QString& filePath) {
 
     file.close();
     return mapData;
+}
+
+PathData Xml::ReadOutFile(const QString& filePath) {
+    PathData path_data;
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open file:" << filePath;
+        return path_data;
+    }
+
+    QXmlStreamReader xml(&file);
+
+    while (!xml.atEnd() && !xml.hasError()) {
+        QXmlStreamReader::TokenType token = xml.readNext();
+
+        if (token == QXmlStreamReader::StartElement) {
+            if (xml.name() == "Distance") {
+                path_data.distance = xml.readElementText().toInt();
+            } else if (xml.name() == "Time") {
+                path_data.time = xml.readElementText().toInt();
+            }
+        }
+    }
+
+    if (xml.hasError()) {
+        qWarning() << "XML error:" << xml.errorString();
+    }
+
+    file.close();
+    return path_data;
 }
 
 void Xml::WriteOutFile(const QString& filePath, const MapData& inputData, const QList<QPoint>& path, double distance, double time) {

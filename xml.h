@@ -24,13 +24,19 @@ struct MapData {
     int left_map_margin;
 };
 
+struct PathData {
+    int distance;
+    int time;
+};
+
 class Xml
 {
     QString in_file_path;
     QString out_file_path;
 public:
     Xml();
-    MapData ReadFile(const QString&);
+    MapData ReadInFile(const QString&);
+    PathData ReadOutFile(const QString&);
     void WriteOutFile(const QString&, const MapData&, const QList<QPoint>&, double, double);
     void WriteInFile(const QString&, const MapData&);
 };

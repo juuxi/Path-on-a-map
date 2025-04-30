@@ -42,7 +42,7 @@ int Map::CostMoving(QPoint from, QPoint to) {
 }
 
 int Map::FindPath() {
-    MapData mpdt = xml_processor.ReadFile("../../input.xml");
+    MapData mpdt = xml_processor.ReadInFile("../../input.xml");
     start = mpdt.start;
     finish = mpdt.finish;
     height = mpdt.height;

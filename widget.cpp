@@ -111,12 +111,22 @@ void Widget::finish_clicked() {
 }
 
 void Widget::execute_clicked() {
-    QString s;
     xml.WriteInFile("../../input.xml", mpdt);
-    s += QString().number(map.FindPath());
-    debug->setText(s);
+    map.FindPath();
     is_executing = true;
     update();
+    PathData ptdt = xml.ReadOutFile("../../output.xml");
+    QMessageBox msg_box;
+    QString s;
+    s += "Информация о пути:";
+    s += "\n";
+    s += "Дистанция: ";
+    s += QString::number(ptdt.distance);
+    s += "\n";
+    s += "Время прохождения: ";
+    s += QString::number(ptdt.time);
+    msg_box.setText(s);
+    msg_box.exec();
 }
 
 void Widget::paintEvent(QPaintEvent*) {
