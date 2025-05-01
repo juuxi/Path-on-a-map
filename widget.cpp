@@ -12,7 +12,7 @@ void Widget::SetupUI() {
     setWindowTitle("Поиск кратчайшего пути на карте");
     setMinimumSize(500, 500);
 
-    add_obstacle_btn = new QPushButton("Добавить объект", this);
+    add_obstacle_btn = new QPushButton("Добавить объект", this); //создание кнопок и свзяка их со слотами
     add_obstacle_btn->setFixedSize(150, 50);
     connect(add_obstacle_btn, &QPushButton::clicked, this, &Widget::AddObstacleClicked);
 
@@ -31,7 +31,8 @@ void Widget::SetupUI() {
     execute_btn = new QPushButton("Выполнить", this);
     execute_btn->setFixedSize(150, 50);
     connect(execute_btn, &QPushButton::clicked, this, &Widget::ExecuteClicked);
-    mpdt.start = QPoint(200,150);
+
+    mpdt.start = QPoint(200,150); //заполнение структуры MapData стандартными значениями
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
     mpdt.width = 500;
@@ -78,7 +79,7 @@ void Widget::DeleteObstacleClicked() {
 }
 
 void Widget::StartClicked() {
-    bool ok{};
+    bool ok{}; //создается окно ввода новой позиции старта
     int new_x = QInputDialog::getInt(this, tr("Старт"),
                                          tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
     if (ok) {
@@ -93,7 +94,7 @@ void Widget::StartClicked() {
 }
 
 void Widget::FinishClicked() {
-    bool ok{};
+    bool ok{}; //создается окно ввода новой позиции финиша
     int new_x = QInputDialog::getInt(this, tr("Финиш"),
                                      tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
     if (ok) {
@@ -109,11 +110,11 @@ void Widget::FinishClicked() {
 
 void Widget::ExecuteClicked() {
     xml.WriteInFile("../../input.xml", mpdt);
-    map.FindPath();
+    map.FindPath(); //выполнение основного алгоритма
     is_executing = true;
     update();
     PathData ptdt = xml.ReadOutFile("../../output.xml");
-    QMessageBox msg_box;
+    QMessageBox msg_box; //вывод окна, сообщающего характеристики полученного пути
     QString s;
     s += "Информация о пути:";
     s += "\n";
@@ -130,19 +131,19 @@ void Widget::paintEvent(QPaintEvent*) {
     QPainter p;
     p.begin(this);
     p.setPen(QPen(QColor(50)));
-    for (int i = 1; i < new_poly_points.size(); i++) {
+    for (int i = 1; i < new_poly_points.size(); i++) { //отрисовка добавлемого препятствия при наличии такового
         p.drawLine(new_poly_points[i-1], new_poly_points[i]);
     }
-    for (Obstacle obstacle: mpdt.obstacles) {
+    for (Obstacle obstacle: mpdt.obstacles) { //отрисовка существубщих препятствий
         QPolygon poly(obstacle.points);
         p.setBrush(QBrush(QColor(0, 0, 255 - 2 * obstacle.impassability)));
         p.drawPolygon(poly);
     }
     p.setBrush(QBrush(QColor(255, 0, 0)));
-    p.drawEllipse(mpdt.start, 5, 5);
+    p.drawEllipse(mpdt.start, 5, 5); //отрисовка старта
     p.setBrush(QBrush(QColor(0, 255, 0)));
-    p.drawEllipse(mpdt.finish, 5, 5);
-    if (is_executing) {
+    p.drawEllipse(mpdt.finish, 5, 5); //отрисовка финиша
+    if (is_executing) { //если была нажата кнопка "выполнить" - рисуем путь
         map.PaintPath(&p);
         is_executing = false;
     }
@@ -150,11 +151,11 @@ void Widget::paintEvent(QPaintEvent*) {
 }
 
 void Widget::mousePressEvent(QMouseEvent* event) {
-    if (is_adding_obstacle && event->button() == Qt::LeftButton) {
-        if (QCursor::pos().x() >= mpdt.left_map_margin) {
+    if (is_adding_obstacle && event->button() == Qt::LeftButton) { //если была нажата кнопка "добавление объекта", а после ЛКМ
+        if (QCursor::pos().x() >= mpdt.left_map_margin) { //добавить точку если это можно сделать
             new_poly_points.append(QCursor::pos());
         }
-        else {
+        else { //вывести сообщение если нельзя
             QMessageBox msg_box;
             QString s;
             s += "Нельзя ставить точку левее x=";
@@ -163,15 +164,15 @@ void Widget::mousePressEvent(QMouseEvent* event) {
             msg_box.exec();
         }
     }
-    if (is_deleting_obstacle && event->button() == Qt::LeftButton) {
-        for(const Obstacle& obstacle: mpdt.obstacles) {
+    if (is_deleting_obstacle && event->button() == Qt::LeftButton) { //если была нажата кнопка "добавление объекта", а после ЛКМ
+        for(const Obstacle& obstacle: mpdt.obstacles) { //найти объект, который хочет удалить пользователь и удалить его
             QPolygon poly(obstacle.points);
             if(poly.containsPoint(QCursor::pos(), Qt::OddEvenFill)) {
                 mpdt.obstacles.removeAt(mpdt.obstacles.indexOf(obstacle));
             }
         }
     }
-    if (event->button() == Qt::RightButton) {
+    if (event->button() == Qt::RightButton) { //если была нажата ПКМ - "отменить" нажатие UI-кнопкок
         is_adding_obstacle = false;
         is_deleting_obstacle = false;
         new_poly_points.clear();
@@ -180,11 +181,11 @@ void Widget::mousePressEvent(QMouseEvent* event) {
 }
 
 void Widget::mouseDoubleClickEvent(QMouseEvent*) {
-    if (is_adding_obstacle) {
+    if (is_adding_obstacle) { //если программа в состоянии добавления объекта - завершитб его добавление
         Obstacle to_add;
         to_add.points = new_poly_points;
         new_poly_points.clear();
-        to_add.impassability = QInputDialog::getInt(this, tr("Препятствие"),
+        to_add.impassability = QInputDialog::getInt(this, tr("Препятствие"), //запрос значения показателя непроходимости
                                          tr("Непроходимость:"), 0, 1, 100, 1, NULL);
         mpdt.obstacles.push_back(to_add);
         is_adding_obstacle = false;

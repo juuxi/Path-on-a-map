@@ -6,7 +6,7 @@ Map::Map() {
     height = 500;
 }
 
-int Map::Heuristic(QPoint a, QPoint b) { //distance between two points
+int Map::Heuristic(QPoint a, QPoint b) {
     return abs(a.x()-b.x()) + abs(a.y()-b.y());
 }
 
@@ -32,26 +32,26 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
 }
 
 int Map::CostMoving(QPoint from, QPoint to) {
-    for (Obstacle obstacle: obstacles) {
+    for (Obstacle obstacle: obstacles) { //проходим по всем существующим препятствиям
         QPolygon poly(obstacle.points);
-        if(poly.containsPoint(to, Qt::OddEvenFill)) {
+        if(poly.containsPoint(to, Qt::OddEvenFill)) { //если точка попала в одно из них - возвращем его показатель непроходимости
             return obstacle.impassability;
         }
     }
-    return 1;
+    return 1; //если не попала - возвращаем единицу
 }
 
-int Map::FindPath() {
-    MapData mpdt = xml_processor.ReadInFile("../../input.xml");
+int Map::FindPath() { //выбранный алгоритм - A*
+    MapData mpdt = xml_processor.ReadInFile("../../input.xml"); //загружаем входные данные
     start = mpdt.start;
     finish = mpdt.finish;
     height = mpdt.height;
     width = mpdt.width;
     obstacles = mpdt.obstacles;
     left_margin = mpdt.left_map_margin;
-    PriorityQueue priority_queue; //map sorts by first argument,
-    priority_queue.push_back(QPair<int, QPoint>(0, start)); //makes function first() very helpful
-    QVector<QVector<int>> cost(width+1, QVector<int>(height+1));
+    PriorityQueue priority_queue; //приоритетная очередь, которая будет сортировать элемент по "стоимости" (вектор cost)
+    priority_queue.push_back(QPair<int, QPoint>(0, start)); //first - стоимость, second - точка
+    QVector<QVector<int>> cost(width+1, QVector<int>(height+1)); //создаем вектора нужной длины
     for (int i = 0; i < width+1; i++) {
         for (int j = 0; j < height+1; j++) {
             cost[i][j] = 0;
@@ -61,8 +61,8 @@ int Map::FindPath() {
     for (int i = 0; i < came_from.size(); i++) {
         came_from[i].resize(height+1);
     }
-    came_from[start.x()][start.y()] = start; //or null
-    cost[start.x()][start.y()] = 0; //before stepping into curr
+    came_from[start.x()][start.y()] = start; //для старта устанавливаем "пришел из" на точку, опять же, старта; старт пришел "из ниоткуда"
+    cost[start.x()][start.y()] = 0;
     while (!priority_queue.empty()) {
         QPoint curr = priority_queue.front().second;
         priority_queue.pop_front();
@@ -72,26 +72,25 @@ int Map::FindPath() {
             break;
         }
 
-        for (QPoint neighbor: neighbors) {
+        for (QPoint neighbor: neighbors) { //проходим по всем соседям данной точки
             int new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor);
-            //of moving from curr to neighbor
-            if (cost[neighbor.x()][neighbor.y()] == 0 || new_cost < cost[neighbor.x()][neighbor.y()]) {
+            if (cost[neighbor.x()][neighbor.y()] == 0 || new_cost < cost[neighbor.x()][neighbor.y()]) { //в случае выполнения хотя бы одного условия
                 int priority = new_cost + Heuristic(finish, neighbor);
                 priority_queue.push_back(QPair<int, QPoint>(priority, neighbor));
-                cost[neighbor.x()][neighbor.y()] = new_cost;
-                came_from[neighbor.x()][neighbor.y()] = curr;
+                cost[neighbor.x()][neighbor.y()] = new_cost; //обновляем стоимость
+                came_from[neighbor.x()][neighbor.y()] = curr; //обновляем "пришел из"
             }
         }
     }
 
-    QList<QPoint> test;
+    QList<QPoint> test; //все точки, содержащиеся в пути
     QPoint curr = finish;
     while (curr != start) {
         QPoint from = came_from[curr.x()][curr.y()];
         test.push_front(curr);
         curr = from;
     }
-    xml_processor.WriteOutFile("../../output.xml", mpdt, test, test.size(), cost[finish.x()][finish.y()]);
+    xml_processor.WriteOutFile("../../output.xml", mpdt, test, test.size(), cost[finish.x()][finish.y()]); //финальная стоимость отражает "время"
 
     return cost[finish.x()][finish.y()];
 }
@@ -99,7 +98,7 @@ int Map::FindPath() {
 void Map::PaintPath(QPainter* p) {
     QPoint curr = finish;
     p->setPen(QPen(QColor(255, 0, 0)));
-    while (curr != start) {
+    while (curr != start) { //рисуем путь прерывистой линией
         for (int i = 0; i < 6; i++) {
             QPoint from = came_from[curr.x()][curr.y()];
             p->drawLine(curr.x(), curr.y(), from.x(), from.y());

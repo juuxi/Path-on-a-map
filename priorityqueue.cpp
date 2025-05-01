@@ -1,6 +1,6 @@
 #include "priorityqueue.h"
 
-bool operator< (QPoint one, QPoint two) {
+bool operator< (QPoint one, QPoint two) { //QPoint не имеет стандартного оператора< ; пришлось писать его самостоятельно, требуется для сравнения QPair
     if (one.x() * one.x() + one.y() * one.y() < two.x() * two.x() + two.y() * two.y()) {
         return true;
     }
@@ -13,7 +13,7 @@ PriorityQueue::PriorityQueue() {
 
 void PriorityQueue::push_back(QPair<int, QPoint> elem) {
     QVector::push_back(elem);
-    place_elem();
+    place_elem(); //после стандартного добавления элемента вызывается функция размещения его на правильное место в отсортированном по возрастанию векторе
 }
 
 void PriorityQueue::place_elem() {
@@ -22,12 +22,12 @@ void PriorityQueue::place_elem() {
 
     int iterIndex = size() - 2;
     iterator iter = end()-2;
-    while (curr < *iter) {
-        swapItemsAt(currIndex, iterIndex);
+    while (curr < *iter) { //идем по вектору и перемещаем элемент влево пока он не окажется на законном месте
+        swapItemsAt(currIndex, iterIndex); //что немаловажно, элементы с одинаковыми первыми аргументами (в нашем случае стоимостями) не переписывают друг друга
         currIndex = iterIndex;
         iterIndex--;
         iter--;
-        if (curr == *begin())
+        if (curr == *begin()) //во избежание выхода за пределы вектора
             break;
     }
 }
