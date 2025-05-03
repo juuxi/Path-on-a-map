@@ -136,7 +136,7 @@ void Widget::paintEvent(QPaintEvent*) {
     }
     for (Obstacle obstacle: mpdt.obstacles) { //отрисовка существубщих препятствий
         QPolygon poly(obstacle.points);
-        p.setBrush(QBrush(QColor(0, 0, 255 - 2 * obstacle.impassability)));
+        p.setBrush(QBrush(QColor(0, 0, 255 - 2 * obstacle.impassability))); //цвет зависит от показателя непроходимости: чем он выше - тем темнее цвет
         p.drawPolygon(poly);
     }
     p.setBrush(QBrush(QColor(255, 0, 0)));
