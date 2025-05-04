@@ -72,6 +72,30 @@ PathData Xml::ReadOutFile(const QString& file_path) {
                 path_data.distance = xml.readElementText().toInt();
             } else if (xml.name() == "Time") {
                 path_data.time = xml.readElementText().toInt();
+            } else if (xml.name() == "Size") {
+                path_data.mpdt.width = xml.attributes().value("width").toInt();
+                path_data.mpdt.height = xml.attributes().value("height").toInt();
+            } else if (xml.name() == "Margins") {
+                path_data.mpdt.left_map_margin = xml.attributes().value("left_map_margin").toInt();
+            } else if (xml.name() == "Obstacle") {
+                Obstacle obstacle;
+                obstacle.impassability = xml.attributes().value("impassability").toInt();
+                while (!(xml.name() == "Obstacle" && xml.isEndElement())) {
+                    xml.readNext();
+                    if (xml.name() == "Point" && xml.isStartElement()) {
+                        QPoint point;
+                        point.setX(xml.attributes().value("x").toInt());
+                        point.setY(xml.attributes().value("y").toInt());
+                        obstacle.points.append(point);
+                    }
+                }
+                path_data.mpdt.obstacles.append(obstacle);
+            } else if (xml.name() == "Start") {
+                path_data.mpdt.start.setX(xml.attributes().value("x").toInt());
+                path_data.mpdt.start.setY(xml.attributes().value("y").toInt());
+            } else if (xml.name() == "Finish") {
+                path_data.mpdt.finish.setX(xml.attributes().value("x").toInt());
+                path_data.mpdt.finish.setY(xml.attributes().value("y").toInt());
             }
         }
     }

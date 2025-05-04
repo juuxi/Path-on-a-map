@@ -34,6 +34,10 @@ void Widget::SetupUI() {
     execute_btn->setFixedSize(150, 50);
     connect(execute_btn, &QPushButton::clicked, this, &Widget::ExecuteClicked);
 
+    save_btn = new QPushButton("Сохранить", this);
+    save_btn->setFixedSize(150, 50);
+    connect(save_btn, &QPushButton::clicked, this, &Widget::SaveClicked);
+
     mpdt.start = QPoint(200,150); //заполнение структуры MapData стандартными значениями
     mpdt.finish = QPoint(400,400);
     mpdt.height = 500;
@@ -70,6 +74,9 @@ void Widget::RepositionButtons() {
     top_offset += finish_btn->height() + spacing;
 
     execute_btn->move(left_margin, top_offset);
+    top_offset += finish_btn->height() + spacing;
+
+    save_btn->move(left_margin, top_offset);
 }
 
 void Widget::AddObstacleClicked() {
@@ -101,11 +108,14 @@ void Widget::FinishClicked() {
 }
 
 void Widget::ExecuteClicked() {
-    xml.WriteInFile("../../input.xml", mpdt);
     map.FindPath(); //выполнение основного алгоритма
     is_executing = true;
     update();
     PathData ptdt = xml.ReadOutFile("../../output.xml");
+    mpdt.finish = ptdt.mpdt.finish;
+    mpdt.start = ptdt.mpdt.start;
+    mpdt.left_map_margin = ptdt.mpdt.left_map_margin;
+    mpdt.obstacles = ptdt.mpdt.obstacles;
     QMessageBox msg_box; //вывод окна, сообщающего характеристики полученного пути
     QString s;
     s += "Информация о пути:";
@@ -117,6 +127,10 @@ void Widget::ExecuteClicked() {
     s += QString::number(ptdt.time);
     msg_box.setText(s);
     msg_box.exec();
+}
+
+void Widget::SaveClicked() {
+    xml.WriteInFile("../../input.xml", mpdt);
 }
 
 void Widget::paintEvent(QPaintEvent*) {

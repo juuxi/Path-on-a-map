@@ -22,6 +22,7 @@ class Widget : public QWidget
     QPushButton *start_btn;
     QPushButton *finish_btn;
     QPushButton *execute_btn;
+    QPushButton *save_btn;
 
     const int left_margin = 20;
     const int top_margin = 10;
@@ -55,5 +56,6 @@ private slots:
     void StartClicked();
     void FinishClicked();
     void ExecuteClicked();
+    void SaveClicked();
 };
 #endif // WIDGET_H
