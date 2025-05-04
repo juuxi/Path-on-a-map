@@ -35,6 +35,8 @@ class Widget : public QWidget
     bool is_adding_obstacle; //флаг нажатия кнопки "добавить объект"
     bool is_deleting_obstacle; //флаг нажатия кнопки "удалить объект"
     bool is_executing; //флаг нажатия кнопки "выполнить"
+    bool is_changing_start; //флаг нажатия кнопки "старт"
+    bool is_changing_finish; //флаг нажатия кнопки "финиш"
 
 public:
     Widget(QWidget *parent = nullptr);

@@ -5,6 +5,8 @@ Widget::Widget(QWidget *parent)
     is_adding_obstacle = false;
     is_deleting_obstacle = false;
     is_executing = false;
+    is_changing_start = false;
+    is_changing_finish = false;
     SetupUI();
 }
 
@@ -79,7 +81,7 @@ void Widget::DeleteObstacleClicked() {
 }
 
 void Widget::StartClicked() {
-    bool ok{}; //создается окно ввода новой позиции старта
+    /*bool ok{}; //создается окно ввода новой позиции старта
     int new_x = QInputDialog::getInt(this, tr("Старт"),
                                          tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
     if (ok) {
@@ -90,22 +92,12 @@ void Widget::StartClicked() {
     if (ok) {
         mpdt.start.setY(new_y);
     }
-    update();
+    update();*/
+    is_changing_start = true;
 }
 
 void Widget::FinishClicked() {
-    bool ok{}; //создается окно ввода новой позиции финиша
-    int new_x = QInputDialog::getInt(this, tr("Финиш"),
-                                     tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
-    if (ok) {
-        mpdt.finish.setX(new_x);
-    }
-    int new_y = QInputDialog::getInt(this, tr("Финиш"),
-                                     tr("y:"), 0, 0, mpdt.height, 1, &ok);
-    if (ok) {
-        mpdt.finish.setY(new_y);
-    }
-    update();
+    is_changing_finish = true;
 }
 
 void Widget::ExecuteClicked() {
@@ -164,7 +156,7 @@ void Widget::mousePressEvent(QMouseEvent* event) {
             msg_box.exec();
         }
     }
-    if (is_deleting_obstacle && event->button() == Qt::LeftButton) { //если была нажата кнопка "добавление объекта", а после ЛКМ
+    else if (is_deleting_obstacle && event->button() == Qt::LeftButton) { //если была нажата кнопка "добавление объекта", а после ЛКМ
         for(const Obstacle& obstacle: mpdt.obstacles) { //найти объект, который хочет удалить пользователь и удалить его
             QPolygon poly(obstacle.points);
             if(poly.containsPoint(QCursor::pos(), Qt::OddEvenFill)) {
@@ -172,9 +164,20 @@ void Widget::mousePressEvent(QMouseEvent* event) {
             }
         }
     }
-    if (event->button() == Qt::RightButton) { //если была нажата ПКМ - "отменить" нажатие UI-кнопкок
+    else if (is_changing_start && event->button() == Qt::LeftButton) {
+        mpdt.start = QCursor::pos();
+        is_changing_start = false;
+    }
+    else if (is_changing_finish && event->button() == Qt::LeftButton) {
+        mpdt.finish = QCursor::pos();
+        is_changing_finish = false;
+    }
+    else if (event->button() == Qt::RightButton) { //если была нажата ПКМ - "отменить" нажатие UI-кнопкок
         is_adding_obstacle = false;
         is_deleting_obstacle = false;
+        is_executing = false;
+        is_changing_start = false;
+        is_changing_finish = false;
         new_poly_points.clear();
     }
     update();
