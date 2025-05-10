@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map>
-    <Size width="500" height="500"/>
+    <Size width="1848" height="892"/>
     <Margins left_map_margin="190"/>
-    <Obstacles/>
-    <Start x="263" y="95"/>
-    <Finish x="400" y="400"/>
+    <Obstacles>
+        <Obstacle impassability="90">
+            <Points count="4">
+                <Point x="896" y="220"/>
+                <Point x="813" y="253"/>
+                <Point x="800" y="319"/>
+                <Point x="925" y="254"/>
+            </Points>
+        </Obstacle>
+        <Obstacle impassability="20">
+            <Points count="4">
+                <Point x="1049" y="355"/>
+                <Point x="633" y="378"/>
+                <Point x="674" y="494"/>
+                <Point x="1079" y="462"/>
+            </Points>
+        </Obstacle>
+    </Obstacles>
+    <Start x="827" y="212"/>
+    <Finish x="934" y="548"/>
 </Map>

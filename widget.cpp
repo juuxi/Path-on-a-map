@@ -88,18 +88,6 @@ void Widget::DeleteObstacleClicked() {
 }
 
 void Widget::StartClicked() {
-    /*bool ok{}; //создается окно ввода новой позиции старта
-    int new_x = QInputDialog::getInt(this, tr("Старт"),
-                                         tr("x:"), 0, mpdt.left_map_margin, mpdt.width, 1, &ok);
-    if (ok) {
-        mpdt.start.setX(new_x);
-    }
-    int new_y = QInputDialog::getInt(this, tr("Старт"),
-                                     tr("y:"), 0, 0, mpdt.height, 1, &ok);
-    if (ok) {
-        mpdt.start.setY(new_y);
-    }
-    update();*/
     is_changing_start = true;
 }
 
