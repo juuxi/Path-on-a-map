@@ -3,23 +3,23 @@
     <Size width="1848" height="892"/>
     <Margins left_map_margin="190"/>
     <Obstacles>
-        <Obstacle impassability="90">
+        <Obstacle impassability="50">
             <Points count="4">
-                <Point x="896" y="220"/>
-                <Point x="813" y="253"/>
-                <Point x="800" y="319"/>
-                <Point x="925" y="254"/>
+                <Point x="571" y="190"/>
+                <Point x="497" y="258"/>
+                <Point x="494" y="347"/>
+                <Point x="622" y="263"/>
             </Points>
         </Obstacle>
-        <Obstacle impassability="20">
+        <Obstacle impassability="100">
             <Points count="4">
-                <Point x="1049" y="355"/>
-                <Point x="633" y="378"/>
-                <Point x="674" y="494"/>
-                <Point x="1079" y="462"/>
+                <Point x="1085" y="258"/>
+                <Point x="983" y="374"/>
+                <Point x="1032" y="471"/>
+                <Point x="1247" y="371"/>
             </Points>
         </Obstacle>
     </Obstacles>
-    <Start x="827" y="212"/>
-    <Finish x="934" y="548"/>
+    <Start x="794" y="175"/>
+    <Finish x="820" y="600"/>
 </Map>

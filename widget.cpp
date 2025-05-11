@@ -81,23 +81,49 @@ void Widget::RepositionButtons() {
 
 void Widget::AddObstacleClicked() {
     is_adding_obstacle = true;
+
+    is_deleting_obstacle = false;
+    is_executing = false;
+    is_changing_start = false;
+    is_changing_finish = false;
 }
 
 void Widget::DeleteObstacleClicked() {
     is_deleting_obstacle = true;
+
+    is_adding_obstacle = false;
+    is_executing = false;
+    is_changing_start = false;
+    is_changing_finish = false;
 }
 
 void Widget::StartClicked() {
     is_changing_start = true;
+
+    is_adding_obstacle = false;
+    is_deleting_obstacle = false;
+    is_executing = false;
+    is_changing_finish = false;
 }
 
 void Widget::FinishClicked() {
     is_changing_finish = true;
+
+    is_adding_obstacle = false;
+    is_deleting_obstacle = false;
+    is_executing = false;
+    is_changing_start = false;
 }
 
 void Widget::ExecuteClicked() {
     map.FindPath(); //выполнение основного алгоритма
     is_executing = true;
+
+    is_adding_obstacle = false;
+    is_deleting_obstacle = false;
+    is_changing_start = false;
+    is_changing_finish = false;
+
     update();
     PathData ptdt = xml.ReadOutFile("../../output.xml");
     mpdt.finish = ptdt.mpdt.finish;
@@ -119,6 +145,11 @@ void Widget::ExecuteClicked() {
 
 void Widget::SaveClicked() {
     xml.WriteInFile("../../input.xml", mpdt);
+    is_adding_obstacle = false;
+    is_deleting_obstacle = false;
+    is_executing = false;
+    is_changing_start = false;
+    is_changing_finish = false;
 }
 
 void Widget::paintEvent(QPaintEvent*) {
@@ -167,11 +198,31 @@ void Widget::mousePressEvent(QMouseEvent* event) {
         }
     }
     else if (is_changing_start && event->button() == Qt::LeftButton) {
-        mpdt.start = QCursor::pos();
+        if (QCursor::pos().x() >= mpdt.left_map_margin) { //добавить точку если это можно сделать
+            mpdt.start = QCursor::pos();
+        }
+        else { //вывести сообщение если нельзя
+            QMessageBox msg_box;
+            QString s;
+            s += "Нельзя ставить старт левее x=";
+            s += QString::number(mpdt.left_map_margin);
+            msg_box.setText(s);
+            msg_box.exec();
+        }
         is_changing_start = false;
     }
     else if (is_changing_finish && event->button() == Qt::LeftButton) {
-        mpdt.finish = QCursor::pos();
+        if (QCursor::pos().x() >= mpdt.left_map_margin) { //добавить точку если это можно сделать
+            mpdt.finish = QCursor::pos();
+        }
+        else { //вывести сообщение если нельзя
+            QMessageBox msg_box;
+            QString s;
+            s += "Нельзя ставить финиш левее x=";
+            s += QString::number(mpdt.left_map_margin);
+            msg_box.setText(s);
+            msg_box.exec();
+        }
         is_changing_finish = false;
     }
     else if (event->button() == Qt::RightButton) { //если была нажата ПКМ - "отменить" нажатие UI-кнопкок
