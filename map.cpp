@@ -1,22 +1,28 @@
 #include "map.h"
 #include <math.h>
 
+struct Compare {
+    bool operator()(const QPair<float, QPoint>& a, const QPair<float, QPoint>& b) {
+        return a.first > b.first;
+    }
+};
+
 Map::Map() {
     width = 500;
     height = 500;
 }
 
-int Map::Heuristic(QPoint a, QPoint b) {
-    int dx = abs(a.x()-b.x());
-    int dy = abs(a.y()-b.y());
-    int minim = 0;
+float Map::Heuristic(QPoint a, QPoint b) {
+    float dx = abs(a.x()-b.x());
+    float dy = abs(a.y()-b.y());
+    float minim = 0;
     if (dx > dy) {
         minim = dy;
     }
     else {
         minim = dx;
     }
-    return int(dx + dy + (qSqrt(2) - 2) * minim);
+    return dx + dy + (qSqrt(2) - 2) * minim;
 }
 
 QVector<QPoint> Map::FindNeighbors(QPoint p) {
@@ -25,7 +31,7 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
         neighbors.push_back(QPoint(p.x()-1, p.y()));
     if (p.x() != width-1)
         neighbors.push_back(QPoint(p.x()+1, p.y()));
-    if (p.y() > left_margin)
+    if (p.y() > 0)
         neighbors.push_back(QPoint(p.x(), p.y()-1));
     if (p.y() != height-1)
         neighbors.push_back(QPoint(p.x(), p.y()+1));
@@ -66,14 +72,11 @@ int Map::FindPath() { //выбранный алгоритм - A*
     width = mpdt.width;
     obstacles = mpdt.obstacles;
     left_margin = mpdt.left_map_margin;
-    PriorityQueue priority_queue; //приоритетная очередь, которая будет сортировать элемент по "стоимости" (вектор cost)
-    priority_queue.push_back(QPair<int, QPoint>(0, start)); //first - стоимость, second - точка
-    QVector<QVector<float>> cost(width+1, QVector<float>(height+1)); //создаем вектора нужной длины
-    for (int i = 0; i < width+1; i++) {
-        for (int j = 0; j < height+1; j++) {
-            cost[i][j] = 0;
-        }
-    }
+    //PriorityQueue priority_queue; //приоритетная очередь, которая будет сортировать элемент по "стоимости" (вектор cost)
+    std::priority_queue<QPair<float, QPoint>, std::vector<QPair<float, QPoint>>, Compare> priority_queue;
+    priority_queue.push(QPair<float, QPoint>(0, start)); //first - стоимость, second - точка
+    QVector<QVector<float>> cost(width+1, QVector<float>(height+1, std::numeric_limits<float>::max()));//создаем вектора нужной длины
+    cost[start.x()][start.y()] = 0;
     came_from.resize(width+1);
     for (int i = 0; i < came_from.size(); i++) {
         came_from[i].resize(height+1);
@@ -81,8 +84,8 @@ int Map::FindPath() { //выбранный алгоритм - A*
     came_from[start.x()][start.y()] = start; //для старта устанавливаем "пришел из" на точку, опять же, старта; старт пришел "из ниоткуда"
     cost[start.x()][start.y()] = 0;
     while (!priority_queue.empty()) {
-        QPoint curr = priority_queue.front().second;
-        priority_queue.pop_front();
+        QPoint curr = priority_queue.top().second;
+        priority_queue.pop();
         QVector<QPoint> neighbors = FindNeighbors(curr);
 
         if (curr == finish) {
@@ -96,9 +99,9 @@ int Map::FindPath() { //выбранный алгоритм - A*
 
         for (QPoint neighbor: neighbors) { //проходим по всем соседям данной точки
             float new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor);
-            if (cost[neighbor.x()][neighbor.y()] == 0 || new_cost < cost[neighbor.x()][neighbor.y()]) { //в случае выполнения хотя бы одного условия
+            if (/*cost[neighbor.x()][neighbor.y()] == 0 || */new_cost < cost[neighbor.x()][neighbor.y()]) { //в случае выполнения хотя бы одного условия
                 float priority = new_cost + Heuristic(finish, neighbor);
-                priority_queue.push_back(QPair<float, QPoint>(priority, neighbor));
+                priority_queue.push(QPair<float, QPoint>(priority, neighbor));
                 cost[neighbor.x()][neighbor.y()] = new_cost; //обновляем стоимость
                 came_from[neighbor.x()][neighbor.y()] = curr; //обновляем "пришел из"
             }

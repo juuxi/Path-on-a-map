@@ -6,6 +6,7 @@
 #include <priorityqueue.h>
 #include "xml.h"
 #include <QtMath>
+#include <queue>
 
 class Map
 {
@@ -17,7 +18,7 @@ class Map
     int left_margin;
     QVector<QVector<QPoint>> came_from;
     QList<Obstacle> obstacles;
-    int Heuristic(QPoint, QPoint); //функция подсчета абсолютного растояния между двумя точками
+    float Heuristic(QPoint, QPoint); //функция подсчета абсолютного растояния между двумя точками
     QVector<QPoint> FindNeighbors(QPoint); //функция, возвращающая массив точек, в которые можно перейти из данной
     float CostMoving(QPoint, QPoint); //функция подсчета стоимости перемещения
 public:

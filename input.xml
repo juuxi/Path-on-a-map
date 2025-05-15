@@ -4,47 +4,19 @@
     <Margins left_map_margin="190"/>
     <Obstacles>
         <Obstacle impassability="100">
-            <Points count="6">
-                <Point x="306" y="16"/>
-                <Point x="270" y="24"/>
-                <Point x="246" y="117"/>
-                <Point x="253" y="339"/>
-                <Point x="268" y="423"/>
-                <Point x="334" y="389"/>
-            </Points>
-        </Obstacle>
-        <Obstacle impassability="100">
-            <Points count="6">
-                <Point x="364" y="462"/>
-                <Point x="362" y="351"/>
-                <Point x="364" y="120"/>
-                <Point x="384" y="113"/>
-                <Point x="388" y="460"/>
-                <Point x="387" y="473"/>
+            <Points count="4">
+                <Point x="305" y="142"/>
+                <Point x="197" y="265"/>
+                <Point x="239" y="357"/>
+                <Point x="422" y="136"/>
             </Points>
         </Obstacle>
         <Obstacle impassability="100">
             <Points count="4">
-                <Point x="376" y="432"/>
-                <Point x="465" y="428"/>
-                <Point x="481" y="477"/>
-                <Point x="384" y="471"/>
-            </Points>
-        </Obstacle>
-        <Obstacle impassability="100">
-            <Points count="4">
-                <Point x="445" y="10"/>
-                <Point x="482" y="10"/>
-                <Point x="483" y="435"/>
-                <Point x="449" y="441"/>
-            </Points>
-        </Obstacle>
-        <Obstacle impassability="100">
-            <Points count="4">
-                <Point x="292" y="24"/>
-                <Point x="465" y="14"/>
-                <Point x="460" y="43"/>
-                <Point x="295" y="50"/>
+                <Point x="281" y="355"/>
+                <Point x="219" y="394"/>
+                <Point x="234" y="438"/>
+                <Point x="331" y="375"/>
             </Points>
         </Obstacle>
     </Obstacles>
