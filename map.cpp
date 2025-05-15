@@ -124,17 +124,17 @@ void Map::PaintPath(QPainter* p) {
     QPoint curr = finish;
     QPen pen;
     pen.setColor(QColor(255, 0, 0));
-    pen.setWidth(2);
+    pen.setWidth(3);
     p->setPen(pen);
     while (curr != start) { //рисуем путь прерывистой линией
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 10; i++) {
             QPoint from = came_from[curr.x()][curr.y()];
             p->drawLine(curr.x(), curr.y(), from.x(), from.y());
             curr = from;
             if (curr == start)
                 break;
         }
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             QPoint from = came_from[curr.x()][curr.y()];
             curr = from;
             if (curr == start)
