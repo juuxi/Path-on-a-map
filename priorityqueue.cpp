@@ -11,14 +11,14 @@ PriorityQueue::PriorityQueue() {
 
 }
 
-void PriorityQueue::push_back(QPair<int, QPoint> elem) {
+void PriorityQueue::push_back(QPair<float, QPoint> elem) {
     QVector::push_back(elem);
     place_elem(); //после стандартного добавления элемента вызывается функция размещения его на правильное место в отсортированном по возрастанию векторе
 }
 
 void PriorityQueue::place_elem() {
     int currIndex = size() - 1;
-    QPair<int, QPoint> curr = last();
+    QPair<float, QPoint> curr = last();
 
     int iterIndex = size() - 2;
     iterator iter = end()-2;

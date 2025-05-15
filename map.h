@@ -19,7 +19,7 @@ class Map
     QList<Obstacle> obstacles;
     int Heuristic(QPoint, QPoint); //функция подсчета абсолютного растояния между двумя точками
     QVector<QPoint> FindNeighbors(QPoint); //функция, возвращающая массив точек, в которые можно перейти из данной
-    int CostMoving(QPoint, QPoint); //функция подсчета стоимости перемещения
+    float CostMoving(QPoint, QPoint); //функция подсчета стоимости перемещения
 public:
     Map();
     int FindPath(); //поиск пути
