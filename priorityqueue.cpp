@@ -22,7 +22,7 @@ void PriorityQueue::place_elem() {
 
     int iterIndex = size() - 2;
     iterator iter = end()-2;
-    while (curr < *iter) { //идем по вектору и перемещаем элемент влево пока он не окажется на законном месте
+    while (curr.first < (*iter).first) { //идем по вектору и перемещаем элемент влево пока он не окажется на законном месте
         swapItemsAt(currIndex, iterIndex); //что немаловажно, элементы с одинаковыми первыми аргументами (в нашем случае стоимостями) не переписывают друг друга
         currIndex = iterIndex;
         iterIndex--;

@@ -7,26 +7,35 @@ Map::Map() {
 }
 
 int Map::Heuristic(QPoint a, QPoint b) {
-    return abs(a.x()-b.x()) + abs(a.y()-b.y());
+    int dx = abs(a.x()-b.x());
+    int dy = abs(a.y()-b.y());
+    int minim = 0;
+    if (dx > dy) {
+        minim = dy;
+    }
+    else {
+        minim = dx;
+    }
+    return int(dx + dy + (qSqrt(2) - 2) * minim);
 }
 
 QVector<QPoint> Map::FindNeighbors(QPoint p) {
     QVector<QPoint> neighbors;
-    if (p.x() != left_margin)
+    if (p.x() > left_margin)
         neighbors.push_back(QPoint(p.x()-1, p.y()));
-    if (p.x() != width)
+    if (p.x() != width-1)
         neighbors.push_back(QPoint(p.x()+1, p.y()));
-    if (p.y() != left_margin)
+    if (p.y() > left_margin)
         neighbors.push_back(QPoint(p.x(), p.y()-1));
-    if (p.y() != height)
+    if (p.y() != height-1)
         neighbors.push_back(QPoint(p.x(), p.y()+1));
-    if (p.x() != left_margin && p.y() != 0)
+    if (p.x() > left_margin && p.y() != 0)
         neighbors.push_back(QPoint(p.x()-1, p.y()-1));
-    if (p.x() != width && p.y() != 0)
+    if (p.x() != width-1 && p.y() != 0)
         neighbors.push_back(QPoint(p.x()+1, p.y()-1));
-    if (p.x() != left_margin && p.y() != height)
+    if (p.x() > left_margin && p.y() != height-1)
         neighbors.push_back(QPoint(p.x()-1, p.y()+1));
-    if (p.x() != width && p.y() != height)
+    if (p.x() != width-1 && p.y() != height-1)
         neighbors.push_back(QPoint(p.x()+1, p.y()+1));
     return neighbors;
 }

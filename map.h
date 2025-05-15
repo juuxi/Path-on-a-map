@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <priorityqueue.h>
 #include "xml.h"
+#include <QtMath>
 
 class Map
 {
