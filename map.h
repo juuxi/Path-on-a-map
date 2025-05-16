@@ -21,6 +21,7 @@ class Map
     float Heuristic(QPoint, QPoint); //функция подсчета абсолютного растояния между двумя точками
     QVector<QPoint> FindNeighbors(QPoint); //функция, возвращающая массив точек, в которые можно перейти из данной
     float CostMoving(QPoint, QPoint); //функция подсчета стоимости перемещения
+    bool isOnCornerOfObject(QPoint);
 public:
     Map();
     int FindPath(); //поиск пути

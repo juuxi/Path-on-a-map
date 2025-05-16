@@ -46,6 +46,32 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
     return neighbors;
 }
 
+bool Map::isOnCornerOfObject(QPoint p) {
+
+    int count = 0;
+    if (p.x() > left_margin && CostMoving(p, QPoint(p.x()-1, p.y())) > qSqrt(2))
+        count++;
+    if (p.x() != width-1 && CostMoving(p, QPoint(p.x()+1, p.y())) > qSqrt(2))
+        count++;
+    if (p.y() > 0 && CostMoving(p, QPoint(p.x(), p.y()-1)) > qSqrt(2))
+        count++;
+    if (p.y() != height-1 && CostMoving(p, QPoint(p.x(), p.y()+1)) > qSqrt(2))
+        count++;
+    if (p.x() > left_margin && p.y() != 0 && CostMoving(p, QPoint(p.x()-1, p.y()-1)) > qSqrt(2))
+        count++;
+    if (p.x() != width-1 && p.y() != 0 && CostMoving(p, QPoint(p.x()+1, p.y()-1)) > qSqrt(2))
+        count++;
+    if (p.x() > left_margin && p.y() != height-1 && CostMoving(p, QPoint(p.x()-1, p.y()+1)) > qSqrt(2))
+        count++;
+    if (p.x() != width-1 && p.y() != height-1 && CostMoving(p, QPoint(p.x()+1, p.y()+1)) > qSqrt(2))
+        count++;
+
+    if (count > 0 && count < 3) { //count > 0 не лучше
+        return true;
+    }
+    return false;
+}
+
 float Map::CostMoving(QPoint from, QPoint to) {
     float multiplier;
     if (from.x() == to.x() || from.y() == to.y()) {
@@ -126,8 +152,9 @@ void Map::PaintPath(QPainter* p) {
     pen.setColor(QColor(255, 0, 0));
     pen.setWidth(3);
     p->setPen(pen);
+    QPoint draw_from = finish;
     while (curr != start) { //рисуем путь прерывистой линией
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             QPoint from = came_from[curr.x()][curr.y()];
             p->drawLine(curr.x(), curr.y(), from.x(), from.y());
             curr = from;
@@ -139,7 +166,20 @@ void Map::PaintPath(QPainter* p) {
             curr = from;
             if (curr == start)
                 break;
+        }*/
+        //DEBUG
+        if (curr.x() == 280)
+            printf("a");
+        //DEBUG
+        QPoint from = came_from[curr.x()][curr.y()];
+        if (from == start || isOnCornerOfObject(from)) {
+            p->drawLine(curr, draw_from);
+            draw_from = curr;
         }
+        if (curr == start) {
+            break;
+        }
+        curr = from;
     }
 }
 
