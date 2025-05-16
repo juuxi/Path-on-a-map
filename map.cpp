@@ -160,26 +160,10 @@ void Map::PaintPath(QPainter* p) {
     QPen pen;
     pen.setColor(QColor(255, 0, 0));
     pen.setWidth(3);
+    pen.setStyle(Qt::DashLine);
     p->setPen(pen);
     QPoint draw_from = finish;
     while (curr != start) { //рисуем путь прерывистой линией
-        /*for (int i = 0; i < 10; i++) {
-            QPoint from = came_from[curr.x()][curr.y()];
-            p->drawLine(curr.x(), curr.y(), from.x(), from.y());
-            curr = from;
-            if (curr == start)
-                break;
-        }
-        for (int i = 0; i < 10; i++) {
-            QPoint from = came_from[curr.x()][curr.y()];
-            curr = from;
-            if (curr == start)
-                break;
-        }*/
-        //DEBUG
-        if (curr.x() == 280)
-            printf("a");
-        //DEBUG
         QPoint from = came_from[curr.x()][curr.y()];
         if (from == start || isOnCornerOfObstacle(from)) {
             p->drawLine(curr, draw_from);

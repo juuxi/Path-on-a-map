@@ -1,39 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map>
-    <Size width="1848" height="892"/>
+    <Size width="500" height="500"/>
     <Margins left_map_margin="190"/>
     <Obstacles>
         <Obstacle impassability="100">
-            <Points count="8">
-                <Point x="644" y="63"/>
-                <Point x="448" y="423"/>
-                <Point x="494" y="428"/>
-                <Point x="691" y="87"/>
-                <Point x="1051" y="115"/>
-                <Point x="832" y="627"/>
-                <Point x="917" y="640"/>
-                <Point x="1130" y="67"/>
-            </Points>
-        </Obstacle>
-        <Obstacle impassability="100">
-            <Points count="6">
-                <Point x="885" y="561"/>
-                <Point x="745" y="518"/>
-                <Point x="859" y="245"/>
-                <Point x="760" y="186"/>
-                <Point x="623" y="527"/>
-                <Point x="861" y="621"/>
-            </Points>
-        </Obstacle>
-        <Obstacle impassability="100">
-            <Points count="4">
-                <Point x="683" y="274"/>
-                <Point x="638" y="258"/>
-                <Point x="619" y="301"/>
-                <Point x="667" y="313"/>
+            <Points count="13">
+                <Point x="353" y="120"/>
+                <Point x="270" y="116"/>
+                <Point x="274" y="412"/>
+                <Point x="312" y="411"/>
+                <Point x="315" y="174"/>
+                <Point x="442" y="174"/>
+                <Point x="434" y="446"/>
+                <Point x="378" y="445"/>
+                <Point x="373" y="226"/>
+                <Point x="360" y="227"/>
+                <Point x="358" y="464"/>
+                <Point x="462" y="467"/>
+                <Point x="467" y="112"/>
             </Points>
         </Obstacle>
     </Obstacles>
-    <Start x="362" y="173"/>
-    <Finish x="847" y="480"/>
+    <Start x="200" y="150"/>
+    <Finish x="400" y="400"/>
 </Map>
