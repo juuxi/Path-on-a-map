@@ -46,27 +46,36 @@ QVector<QPoint> Map::FindNeighbors(QPoint p) {
     return neighbors;
 }
 
-bool Map::isOnCornerOfObject(QPoint p) {
+bool Map::isObstaclePoint(QPoint p) {
+    for (Obstacle obs : obstacles) {
+        if (obs.points.contains(p)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Map::isOnCornerOfObstacle(QPoint p) {
 
     int count = 0;
-    if (p.x() > left_margin && CostMoving(p, QPoint(p.x()-1, p.y())) > qSqrt(2))
+    if (p.x() > left_margin && isObstaclePoint(QPoint(p.x()-1, p.y())))
         count++;
-    if (p.x() != width-1 && CostMoving(p, QPoint(p.x()+1, p.y())) > qSqrt(2))
+    if (p.x() != width-1 && isObstaclePoint(QPoint(p.x()+1, p.y())))
         count++;
-    if (p.y() > 0 && CostMoving(p, QPoint(p.x(), p.y()-1)) > qSqrt(2))
+    if (p.y() > 0 && isObstaclePoint(QPoint(p.x(), p.y()-1)))
         count++;
-    if (p.y() != height-1 && CostMoving(p, QPoint(p.x(), p.y()+1)) > qSqrt(2))
+    if (p.y() != height-1 && isObstaclePoint(QPoint(p.x(), p.y()+1)))
         count++;
-    if (p.x() > left_margin && p.y() != 0 && CostMoving(p, QPoint(p.x()-1, p.y()-1)) > qSqrt(2))
+    if (p.x() > left_margin && p.y() != 0 && isObstaclePoint(QPoint(p.x()-1, p.y()-1)))
         count++;
-    if (p.x() != width-1 && p.y() != 0 && CostMoving(p, QPoint(p.x()+1, p.y()-1)) > qSqrt(2))
+    if (p.x() != width-1 && p.y() != 0 && isObstaclePoint(QPoint(p.x()+1, p.y()-1)))
         count++;
-    if (p.x() > left_margin && p.y() != height-1 && CostMoving(p, QPoint(p.x()-1, p.y()+1)) > qSqrt(2))
+    if (p.x() > left_margin && p.y() != height-1 && isObstaclePoint(QPoint(p.x()-1, p.y()+1)))
         count++;
-    if (p.x() != width-1 && p.y() != height-1 && CostMoving(p, QPoint(p.x()+1, p.y()+1)) > qSqrt(2))
+    if (p.x() != width-1 && p.y() != height-1 && isObstaclePoint(QPoint(p.x()+1, p.y()+1)))
         count++;
 
-    if (count > 0 && count < 3) { //count > 0 не лучше
+    if (count > 0) { //count > 0 не лучше
         return true;
     }
     return false;
@@ -83,7 +92,7 @@ float Map::CostMoving(QPoint from, QPoint to) {
 
     for (Obstacle obstacle: obstacles) { //проходим по всем существующим препятствиям
         QPolygon poly(obstacle.points);
-        if(poly.containsPoint(to, Qt::OddEvenFill)) { //если точка попала в одно из них - возвращем его показатель непроходимости
+        if(poly.containsPoint(to, Qt::OddEvenFill) || poly.contains(to)) { //если точка попала в одно из них - возвращем его показатель непроходимости
             return obstacle.impassability * multiplier;
         }
     }
@@ -172,7 +181,7 @@ void Map::PaintPath(QPainter* p) {
             printf("a");
         //DEBUG
         QPoint from = came_from[curr.x()][curr.y()];
-        if (from == start || isOnCornerOfObject(from)) {
+        if (from == start || isOnCornerOfObstacle(from)) {
             p->drawLine(curr, draw_from);
             draw_from = curr;
         }
