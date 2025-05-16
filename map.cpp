@@ -129,11 +129,6 @@ int Map::FindPath() { //выбранный алгоритм - A*
             break;
         }
 
-        //DEBUG
-        if (curr.x() == 281 && curr.y() == 355)
-            printf("a");
-        //DEBUG
-
         for (QPoint neighbor: neighbors) { //проходим по всем соседям данной точки
             float new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor);
             if (new_cost < cost[neighbor.x()][neighbor.y()]) { //в случае выполнения хотя бы одного условия

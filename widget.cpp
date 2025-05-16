@@ -44,29 +44,6 @@ void Widget::SetupUI() {
     mpdt.width = 500;
     mpdt.left_map_margin = 150 + 2 * left_margin;
 
-    //DEBUG
-    Obstacle obs1;
-    Obstacle obs2;
-    QVector<QPoint> pt1;
-    pt1.push_back(QPoint(305, 142));
-    pt1.push_back(QPoint(197, 265));
-    pt1.push_back(QPoint(239, 357));
-    pt1.push_back(QPoint(422, 136));
-    QVector<QPoint> pt2;
-    pt2.push_back(QPoint(281, 355));
-    pt2.push_back(QPoint(219, 394));
-    pt2.push_back(QPoint(234, 438));
-    pt2.push_back(QPoint(331, 375));
-    obs1.points = pt1;
-    obs1.impassability = 100;
-    obs2.points = pt2;
-    obs2.impassability = 100;
-    QList<Obstacle> obss;
-    obss.push_back(obs1);
-    obss.push_back(obs2);
-    mpdt.obstacles = obss;
-    //DEBUG
-
     RepositionButtons();
 }
 
