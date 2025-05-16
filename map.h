@@ -16,6 +16,7 @@ class Map
     int width;
     int height;
     int left_margin;
+    int diagonal_steps_counter;
     QVector<QVector<QPoint>> came_from;
     QList<Obstacle> obstacles;
     float Heuristic(QPoint, QPoint); //функция подсчета абсолютного растояния между двумя точками

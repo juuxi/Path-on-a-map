@@ -10,6 +10,7 @@ struct Compare {
 Map::Map() {
     width = 500;
     height = 500;
+    diagonal_steps_counter = 0;
 }
 
 float Map::Heuristic(QPoint a, QPoint b) {
@@ -100,6 +101,7 @@ float Map::CostMoving(QPoint from, QPoint to) {
 }
 
 int Map::FindPath() { //выбранный алгоритм - A*
+    diagonal_steps_counter = 0;
     MapData mpdt = xml_processor.ReadInFile("../../input.xml"); //загружаем входные данные
     start = mpdt.start;
     finish = mpdt.finish;
@@ -134,7 +136,7 @@ int Map::FindPath() { //выбранный алгоритм - A*
 
         for (QPoint neighbor: neighbors) { //проходим по всем соседям данной точки
             float new_cost = cost[curr.x()][curr.y()] + CostMoving(curr, neighbor);
-            if (/*cost[neighbor.x()][neighbor.y()] == 0 || */new_cost < cost[neighbor.x()][neighbor.y()]) { //в случае выполнения хотя бы одного условия
+            if (new_cost < cost[neighbor.x()][neighbor.y()]) { //в случае выполнения хотя бы одного условия
                 float priority = new_cost + Heuristic(finish, neighbor);
                 priority_queue.push(QPair<float, QPoint>(priority, neighbor));
                 cost[neighbor.x()][neighbor.y()] = new_cost; //обновляем стоимость
@@ -147,10 +149,14 @@ int Map::FindPath() { //выбранный алгоритм - A*
     QPoint curr = finish;
     while (curr != start) {
         QPoint from = came_from[curr.x()][curr.y()];
+        if (from.x() != curr.x() && from.y() != curr.y()) {
+            diagonal_steps_counter++;
+        }
         test.push_front(curr);
         curr = from;
     }
-    xml_processor.WriteOutFile("../../output.xml", mpdt, test, test.size(), int(cost[finish.x()][finish.y()])); //финальная стоимость отражает "время"
+    float distance = (diagonal_steps_counter * qSqrt(2)) + (test.size() - diagonal_steps_counter);
+    xml_processor.WriteOutFile("../../output.xml", mpdt, test, int(distance), int(cost[finish.x()][finish.y()])); //финальная стоимость отражает "время"
 
     return int(cost[finish.x()][finish.y()]);
 }
